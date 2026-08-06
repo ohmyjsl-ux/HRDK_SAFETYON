@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1268e5">
+  <meta name="description" content="한국산업인력공단 경기서부지사 QR 통합 안전서비스 안전ON">
+  <title>안전ON | 경기서부지사</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문 바로가기</a>
+
+  <div class="app-shell">
+    <header class="top-header" aria-label="서비스 상단">
+      <a class="brand" href="#top" aria-label="안전ON 홈으로 이동">
+        <span class="brand-title">안전<span class="power-o" aria-hidden="true">O</span>N</span>
+        <span class="brand-branch" id="branchName">경기서부지사</span>
+      </a>
+
+      <div class="header-actions" aria-label="빠른 기능">
+        <button class="icon-button" id="searchFocusButton" type="button" aria-label="메뉴 검색">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+        </button>
+        <button class="icon-button" id="noticeScrollButton" type="button" aria-label="오늘의 안전이슈로 이동">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+        </button>
+        <button class="icon-button" id="helpButton" type="button" aria-label="서비스 이용안내">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-6v.01M9.8 9a2.3 2.3 0 1 1 3.5 2c-.8.5-1.3 1-1.3 2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="search-section" aria-label="메뉴 검색">
+        <label class="search-box" for="menuSearch">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+          <input id="menuSearch" type="search" autocomplete="off" placeholder="오늘의 안전을 확인해 보세요" aria-describedby="searchResultText">
+          <button id="clearSearchButton" class="clear-search" type="button" aria-label="검색어 지우기" hidden>×</button>
+        </label>
+        <p id="searchResultText" class="sr-only" aria-live="polite"></p>
+      </section>
+
+      <section class="hero-card" id="safety-status" aria-labelledby="statusHeading">
+        <div class="hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow">오늘의 안전 신호등</p>
+            <h1 id="statusHeading" class="status-title">오늘은 <strong id="statusLevelText">관심</strong> 단계</h1>
+            <p id="statusSummary" class="status-summary">폭염 및 외부 이동 시 수분 섭취 권장</p>
+            <div class="hero-actions">
+              <button id="statusDetailButton" class="primary-button" type="button">자세히 보기</button>
+              <button id="refreshButton" class="ghost-button" type="button" aria-label="안전정보 다시 불러오기">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8M20 3v5h-5"/></svg>
+                새로고침
+              </button>
+            </div>
+            <p class="updated-at">마지막 갱신 <time id="updatedAt">2026-08-06 08:30</time></p>
+          </div>
+
+          <div class="hero-visual" aria-label="현재 안전단계 신호등">
+            <div class="traffic-light" id="trafficLight" role="img" aria-label="관심 단계">
+              <span class="light light-green" data-level="정상"></span>
+              <span class="light light-yellow" data-level="관심"></span>
+              <span class="light light-red" data-level="주의"></span>
+            </div>
+            <img src="assets/hrdk-blue-mascot.png" class="hero-mascot" alt="안전을 안내하는 HRDK 파란색 캐릭터">
+          </div>
+        </div>
+      </section>
+
+      <section class="notice-card" id="safety-notices" aria-labelledby="noticeHeading">
+        <button id="noticeOpenButton" class="notice-button" type="button">
+          <span class="notice-label">
+            <span class="round-icon blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 11v2h3l4 4V7l-4 4H3Zm10-2 6-3v12l-6-3V9Zm6 2h2v2h-2"/></svg>
+            </span>
+            <span id="noticeHeading">오늘의 안전이슈</span>
+          </span>
+          <span id="noticePreview" class="notice-preview"></span>
+          <span class="chevron" aria-hidden="true">›</span>
+        </button>
+      </section>
+
+      <section class="quick-section" aria-labelledby="quickHeading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">QUICK MENU</p>
+            <h2 id="quickHeading">안전서비스 바로가기</h2>
+          </div>
+          <span id="visibleMenuCount" class="menu-count" aria-hidden="true">6개</span>
+        </div>
+        <div id="quickMenuGrid" class="quick-grid"></div>
+        <div id="emptySearch" class="empty-state" hidden>
+          <strong>검색 결과가 없습니다.</strong>
+          <p>다른 검색어를 입력해 주세요.</p>
+        </div>
+      </section>
+
+      <section class="reminder-banner" aria-label="안전정보 확인 안내">
+        <img src="assets/hrdk-mascots.png" alt="HRDK 파란색·초록색 공식 캐릭터" class="banner-mascot mascot-pair">
+        <div class="reminder-copy">
+          <strong>정기적으로 안전정보를 확인해 주세요!</strong>
+          <span>나의 안전이, 모두의 일상을 지킵니다.</span>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <strong id="organizationName">한국산업인력공단 경기서부지사</strong>
+        <span>QR 통합 안전서비스</span>
+      </footer>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="하단 메뉴">
+    <button class="nav-item is-active" type="button" data-action="home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-9Z"/></svg>
+      <span>홈</span>
+    </button>
+    <button class="nav-item" type="button" data-action="status">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v5c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-3Zm-3 9 2 2 4-4"/></svg>
+      <span>안전현황</span>
+    </button>
+    <button class="nav-item nav-report" type="button" data-action="report">
+      <span class="nav-report-circle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l11-11-4-4L4 16v4Zm9-13 4 4M12 20h8"/></svg>
+      </span>
+      <span>신고</span>
+    </button>
+    <button class="nav-item" type="button" data-action="guide">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a3 3 0 0 1 3-2h5v17H7a3 3 0 0 0-3 2V5Zm16 0a3 3 0 0 0-3-2h-5v17h5a3 3 0 0 1 3 2V5Z"/></svg>
+      <span>가이드</span>
+    </button>
+    <button class="nav-item" type="button" data-action="menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <span>메뉴</span>
+    </button>
+  </nav>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+      <div class="modal-header">
+        <div>
+          <p class="modal-kicker" id="modalKicker">안전ON</p>
+          <h2 id="modalTitle">상세안내</h2>
+        </div>
+        <button id="modalCloseButton" class="modal-close" type="button" aria-label="팝업 닫기">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <noscript>
+    <div class="noscript">이 페이지를 이용하려면 자바스크립트를 활성화해 주세요.</div>
+  </noscript>
+</body>
+</html>
