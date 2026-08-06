@@ -122,7 +122,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round
 .quick-card:hover, .quick-card:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,58,130,.10); border-color: var(--card-accent); outline: none; }
 .quick-icon { width: 52px; height: 52px; display: grid; place-items: center; color: var(--card-accent); margin-bottom: 13px; }
 .quick-icon svg { width: 46px; height: 46px; stroke-width: 1.7; }
-.quick-title { font-size: 1.08rem; line-height: 1.35; letter-spacing: -.035em; font-weight: 900; padding-right: 18px; }
+.quick-title { font-size: 1.08rem; line-height: 1.35; letter-spacing: -.035em; font-weight: 900; padding-right: 18px; white-space: pre-line; }
 .quick-description { margin-top: auto; padding-top: 12px; color: #586174; font-size: .82rem; line-height: 1.45; }
 .quick-chevron { position: absolute; right: 15px; bottom: 15px; font-size: 1.75rem; color: #172033; }
 .empty-state { text-align: center; padding: 38px 20px; border: 1px dashed #c7d1df; border-radius: var(--radius-md); color: var(--muted); }
@@ -176,13 +176,45 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round
 .notice-item h3 { margin: 0; color: var(--ink); }
 .notice-meta { color: var(--muted); font-size: .83rem; margin: 8px 0; }
 .contact-list, .content-list { display: grid; gap: 10px; }
-.contact-button, .content-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid #dce3ec; border-radius: 15px; padding: 15px 16px; background: #fff; color: inherit; text-decoration: none; }
+.contact-button, .content-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid #dce3ec; border-radius: 15px; padding: 15px 16px; background: #fff; color: inherit; text-decoration: none; width: 100%; font: inherit; text-align: left; cursor: default; }
 .contact-button strong, .content-row strong { display: block; color: var(--navy); }
 .contact-button span, .content-row span { color: var(--muted); font-size: .86rem; }
 .contact-button:hover { border-color: var(--blue); background: var(--pale-blue); }
+.content-row-link { cursor: pointer; }
+.content-row-link:hover, .content-row-link:focus-visible { border-color: var(--blue); background: var(--pale-blue); outline: none; }
+.content-notice { display: block; margin-top: 6px; color: var(--blue); font-size: .78rem; font-weight: 700; }
+.content-arrow { font-size: 1.6rem; line-height: 1; color: #97a2b5; flex: 0 0 auto; }
 .menu-modal-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
 .menu-modal-grid button { min-height: 74px; border: 1px solid #dce3ec; border-radius: 15px; background: #fff; font-weight: 800; color: var(--ink); cursor: pointer; }
 .menu-modal-grid button:hover { border-color: var(--blue); background: var(--pale-blue); }
+
+.modal-lead { margin: 0 0 14px; color: #586174; font-size: .88rem; }
+.floor-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.floor-card { margin: 0; border: 1px solid #dce3ec; border-radius: 16px; overflow: hidden; background: #fff; }
+.floor-card-image { position: relative; display: block; width: 100%; padding: 0; margin: 0; border: 0; background: #fffceb; cursor: zoom-in; }
+.floor-card-image img { width: 100%; height: auto; display: block; }
+.floor-card-zoom { position: absolute; right: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; background: rgba(11,58,130,.78); color: #fff; display: grid; place-items: center; font-size: 1.2rem; font-weight: 900; }
+.floor-card-caption { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-top: 1px solid #edf0f4; }
+.floor-card-label { font-weight: 900; color: var(--navy); }
+.floor-card-download { min-height: 34px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 10px; background: var(--pale-blue); font-size: .82rem; font-weight: 800; color: var(--blue); text-decoration: none; }
+.floor-card-download:hover { background: #dcebff; }
+
+.lightbox-backdrop { position: fixed; z-index: 1300; inset: 0; background: rgba(4,10,20,.88); display: grid; place-items: center; padding: 16px; }
+.lightbox-backdrop[hidden] { display: none; }
+.lightbox { position: relative; width: 100%; max-width: 900px; max-height: 92vh; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.lightbox img { max-width: 100%; max-height: 74vh; object-fit: contain; border-radius: 10px; background: #fff; box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+.lightbox-close { position: absolute; top: -46px; right: 0; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: #101828; font-size: 1.4rem; line-height: 1; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+.lightbox-actions { display: flex; gap: 10px; }
+.lightbox-download { min-height: 46px; padding: 0 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: #fff; color: var(--navy); font-weight: 800; text-decoration: none; box-shadow: 0 8px 18px rgba(0,0,0,.2); }
+
+@media (min-width: 480px) {
+  .floor-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 480px) {
+  .lightbox-close { top: 6px; right: 6px; background: rgba(255,255,255,.94); }
+  .lightbox img { max-height: 66vh; }
+}
 
 .toast { position: fixed; z-index: 1200; left: 50%; bottom: calc(var(--bottom-nav-height) + 20px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); width: min(calc(100% - 40px), 520px); background: #172033; color: #fff; border-radius: 14px; padding: 13px 17px; text-align: center; font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; box-shadow: 0 12px 34px rgba(0,0,0,.22); }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
@@ -309,25 +341,39 @@ window.SAFETY_CONFIG = {
   emergencyContacts: [
     { name: "화재·구조·구급", number: "119" },
     { name: "경찰 신고", number: "112" },
-    { name: "경기서부지사 대표번호", number: "연락처 입력" }
+    { name: "경기서부지사 안전 담당자", number: "032-719-0811" }
   ],
 
-  buildingGuide: [
-    { title: "비상구", text: "층별 비상구 유도등과 대피 안내도를 확인해 주세요." },
-    { title: "AED", text: "AED 위치를 사전에 확인하고 응급상황 시 119에 신고해 주세요." },
-    { title: "대피경로", text: "화재 시 엘리베이터를 이용하지 말고 계단으로 대피해 주세요." }
+  floorPlans: [
+    { label: "2층", title: "2층 자격시험부 피난안내도", image: "images/2층.png" },
+    { label: "3층", title: "3층 피난안내도", image: "images/3층.png" }
   ],
 
   emergencyManual: [
-    { title: "화재", text: "주변에 알리고 119에 신고한 뒤 가장 가까운 비상구로 대피합니다." },
-    { title: "지진", text: "책상 아래에서 몸을 보호하고 흔들림이 멈춘 뒤 계단으로 이동합니다." },
-    { title: "응급환자", text: "119 신고 후 환자의 의식과 호흡을 확인하고 가능한 경우 응급처치를 시행합니다." }
+    {
+      title: "화재",
+      text: "주변에 알리고 119에 신고한 뒤 가장 가까운 비상구로 대피합니다.",
+      url: "https://www.safetv.go.kr/base/video/view?playlistManagementIdx=&idx=2951&searchCategory=",
+      notice: "탭하면 행정안전부 안전한TV 영상으로 이동합니다."
+    },
+    {
+      title: "지진",
+      text: "책상 아래에서 몸을 보호하고 흔들림이 멈춘 뒤 계단으로 이동합니다.",
+      url: "https://www.safetv.go.kr/base/video/view?playlistManagementIdx=&idx=2971&searchCategory=1&menuLevel=2&menuNo=1",
+      notice: "탭하면 행정안전부 안전한TV 영상으로 이동합니다."
+    },
+    {
+      title: "응급환자",
+      text: "119 신고 후 환자의 의식과 호흡을 확인하고 가능한 경우 응급처치를 시행합니다.",
+      url: "https://www.safetv.go.kr/base/video/view?playlistManagementIdx=&idx=2586&searchCategory=",
+      notice: "탭하면 행정안전부 안전한TV 영상으로 이동합니다."
+    }
   ],
 
   safetyResources: [
-    { title: "도급근로자 안전자료", text: "작업 전 안전수칙, 보호구 착용 및 위험요인 확인자료" },
-    { title: "기상특보 행동수칙", text: "폭염·한파·호우 등 기상상황별 안전수칙" },
-    { title: "청사 시설 이용수칙", text: "승강기·계단·주차장 등 주요 시설 안전수칙" }
+    { title: "도급근로자 안전자료", text: "작업 전 안전수칙, 보호구 착용 및 위험요인 확인자료", type: "link", url: "https://m.worldjob.or.kr:444/lms/safetyEdu.do?idContMaster=300173" },
+    { title: "기상특보 행동수칙", text: "폭염·한파·호우 등 기상상황별 안전수칙", type: "image", image: "images/기상특보_행동수칙.jpg" },
+    { title: "청사 시설 이용수칙", text: "승강기·계단·주차장 등 주요 시설 안전수칙", type: "image", image: "images/청사_시설_이용수칙.jpg" }
   ]
 };
 
@@ -349,7 +395,7 @@ window.SAFETY_CONFIG = {
     { key: "report", title: "안전신문고 바로가기", description: "위험요인 즉시 신고", icon: "warning", accent: "#e2a800", bg: "#fffaf0", border: "#f3d697" },
     { key: "buildingGuide", title: "피난안내도", description: "비상구·대피경로 안내", icon: "exit", accent: "#2e9b43", bg: "#f3faf3", border: "#c9e4c9" },
     { key: "emergency", title: "비상연락망", description: "응급상황 대응 정보", icon: "aed", accent: "#2e9b43", bg: "#f3faf3", border: "#c9e4c9" },
-    { key: "emergencyManual", title: "행동요령", description: "화재·지진·응급처치", icon: "fire", accent: "#ef6a3a", bg: "#fff5f1", border: "#f5c7b5" },
+    { key: "emergencyManual", title: "비상상황\n행동요령", description: "화재·지진·응급처치", icon: "fire", accent: "#ef6a3a", bg: "#fff5f1", border: "#f5c7b5" },
     { key: "safetyResources", title: "청사 안전 이용 가이드", description: "직원·도급근로자 자료", icon: "document", accent: "#1268e5", bg: "#f1f7ff", border: "#bdd6f7" }
   ];
 
@@ -374,7 +420,8 @@ window.SAFETY_CONFIG = {
       "statusLevelText", "statusSummary", "updatedAt", "trafficLight", "noticePreview",
       "quickMenuGrid", "emptySearch", "visibleMenuCount", "modalBackdrop", "modalTitle",
       "modalKicker", "modalBody", "modalCloseButton", "toast", "statusDetailButton",
-      "noticeOpenButton", "searchFocusButton", "noticeScrollButton", "helpButton", "refreshButton"
+      "noticeOpenButton", "searchFocusButton", "noticeScrollButton", "helpButton", "refreshButton",
+      "lightboxBackdrop", "lightboxImage", "lightboxDownload", "lightboxCloseButton"
     ].forEach((id) => { elements[id] = document.getElementById(id); });
   }
 
@@ -458,8 +505,14 @@ window.SAFETY_CONFIG = {
     elements.modalBackdrop.addEventListener("click", (event) => {
       if (event.target === elements.modalBackdrop) closeModal();
     });
+    elements.lightboxCloseButton.addEventListener("click", closeLightbox);
+    elements.lightboxBackdrop.addEventListener("click", (event) => {
+      if (event.target === elements.lightboxBackdrop) closeLightbox();
+    });
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !elements.modalBackdrop.hidden) closeModal();
+      if (event.key !== "Escape") return;
+      if (!elements.lightboxBackdrop.hidden) { closeLightbox(); return; }
+      if (!elements.modalBackdrop.hidden) closeModal();
     });
     document.querySelectorAll(".bottom-nav .nav-item").forEach((button) => {
       button.addEventListener("click", () => handleBottomNav(button.dataset.action));
@@ -553,23 +606,79 @@ window.SAFETY_CONFIG = {
   }
 
   function openBuildingGuideModal() {
-    openContentListModal("청사 안전 이용 가이드", "시설 안내", config.buildingGuide || []);
+    const floors = Array.isArray(config.floorPlans) ? config.floorPlans : [];
+    const html = floors.length ? floors.map((floor) => `
+      <figure class="floor-card">
+        <button type="button" class="floor-card-image" data-lightbox-src="${escapeHtml(floor.image)}" data-lightbox-title="${escapeHtml(floor.title)}" aria-label="${escapeHtml(floor.title)} 확대해서 보기">
+          <img src="${escapeHtml(floor.image)}" alt="${escapeHtml(floor.title)}" loading="lazy">
+          <span class="floor-card-zoom" aria-hidden="true">＋</span>
+        </button>
+        <figcaption class="floor-card-caption">
+          <span class="floor-card-label">${escapeHtml(floor.label)}</span>
+          <a class="floor-card-download" href="${escapeHtml(floor.image)}" download>다운로드</a>
+        </figcaption>
+      </figure>`).join("") : "<p>등록된 피난안내도가 없습니다.</p>";
+    openModal("층별 피난 안내도", "피난안내도", `<p class="modal-lead">이미지를 누르면 확대해서 볼 수 있어요.</p><div class="floor-grid">${html}</div>`);
+    bindLightboxTriggers();
   }
 
   function openManualModal() {
-    openContentListModal("비상상황 행동요령", "행동요령", config.emergencyManual || []);
+    const rows = Array.isArray(config.emergencyManual) ? config.emergencyManual : [];
+    const html = rows.length ? rows.map((row) => `
+      <a class="content-row content-row-link" href="${escapeHtml(row.url || "#")}" target="_blank" rel="noopener noreferrer">
+        <div>
+          <strong>${escapeHtml(row.title)}</strong>
+          <span>${escapeHtml(row.text)}</span>
+          ${row.notice ? `<span class="content-notice">${escapeHtml(row.notice)}</span>` : ""}
+        </div>
+        <span class="content-arrow" aria-hidden="true">›</span>
+      </a>`).join("") : "<p>등록된 내용이 없습니다.</p>";
+    openModal("비상상황 행동요령", "행동요령", `<div class="content-list">${html}</div>`);
   }
 
   function openResourcesModal() {
-    openContentListModal("안전자료", "자료 안내", config.safetyResources || []);
+    const rows = Array.isArray(config.safetyResources) ? config.safetyResources : [];
+    const html = rows.length ? rows.map((row) => {
+      if (row.type === "link") {
+        return `<a class="content-row content-row-link" href="${escapeHtml(row.url)}" target="_blank" rel="noopener noreferrer">
+          <div><strong>${escapeHtml(row.title)}</strong><span>${escapeHtml(row.text)}</span></div>
+          <span class="content-arrow" aria-hidden="true">›</span>
+        </a>`;
+      }
+      if (row.type === "image") {
+        return `<button type="button" class="content-row content-row-link" data-lightbox-src="${escapeHtml(row.image)}" data-lightbox-title="${escapeHtml(row.title)}">
+          <div><strong>${escapeHtml(row.title)}</strong><span>${escapeHtml(row.text)}</span></div>
+          <span class="content-arrow" aria-hidden="true">＋</span>
+        </button>`;
+      }
+      return `<div class="content-row"><div><strong>${escapeHtml(row.title)}</strong><span>${escapeHtml(row.text)}</span></div></div>`;
+    }).join("") : "<p>등록된 내용이 없습니다.</p>";
+    openModal("청사 안전 이용 가이드", "자료 안내", `<div class="content-list">${html}</div>`);
+    bindLightboxTriggers();
   }
 
-  function openContentListModal(title, kicker, rows) {
-    const html = rows.length ? rows.map((row) => `
-      <div class="content-row">
-        <div><strong>${escapeHtml(row.title)}</strong><span>${escapeHtml(row.text)}</span></div>
-      </div>`).join("") : "<p>등록된 내용이 없습니다.</p>";
-    openModal(title, kicker, `<div class="content-list">${html}</div>`);
+  function bindLightboxTriggers() {
+    elements.modalBody.querySelectorAll("[data-lightbox-src]").forEach((trigger) => {
+      trigger.addEventListener("click", (event) => {
+        event.preventDefault();
+        openLightbox(trigger.dataset.lightboxSrc, trigger.dataset.lightboxTitle || "");
+      });
+    });
+  }
+
+  function openLightbox(src, title) {
+    elements.lightboxImage.src = src;
+    elements.lightboxImage.alt = title;
+    elements.lightboxDownload.href = src;
+    elements.lightboxDownload.setAttribute("download", (title || "안전ON_이미지").replace(/\s+/g, "_"));
+    elements.lightboxBackdrop.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    elements.lightboxBackdrop.hidden = true;
+    elements.lightboxImage.src = "";
+    if (elements.modalBackdrop.hidden) document.body.style.overflow = "";
   }
 
   function openEmergencyModal() {
@@ -581,7 +690,7 @@ window.SAFETY_CONFIG = {
       }
       return `<div class="contact-button" aria-disabled="true"><div><strong>${escapeHtml(contact.name)}</strong><span>config.js에서 번호를 입력해 주세요.</span></div><b>${escapeHtml(contact.number)}</b></div>`;
     }).join("");
-    openModal("AED·비상연락", "응급상황 대응", `<p>긴급한 상황에서는 즉시 119 또는 112에 연락해 주세요.</p><div class="contact-list">${html}</div>`);
+    openModal("비상연락망", "응급상황 대응", `<p>긴급한 상황에서는 즉시 119 또는 112에 연락해 주세요.</p><div class="contact-list">${html}</div>`);
   }
 
   function openHelpModal() {
@@ -794,6 +903,16 @@ window.SAFETY_CONFIG = {
       </div>
       <div class="modal-body" id="modalBody"></div>
     </section>
+  </div>
+
+  <div class="lightbox-backdrop" id="lightboxBackdrop" hidden>
+    <div class="lightbox">
+      <button class="lightbox-close" id="lightboxCloseButton" type="button" aria-label="이미지 닫기">×</button>
+      <img id="lightboxImage" src="" alt="">
+      <div class="lightbox-actions">
+        <a id="lightboxDownload" class="lightbox-download" href="#" download>다운로드</a>
+      </div>
+    </div>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
