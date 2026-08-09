@@ -60,7 +60,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round
 .brand-tagline { margin-top: 3px; font-size: .84rem; font-weight: 600; color: #5b6b85; letter-spacing: -.01em; line-height: 1.5; }
 .brand-tagline strong { color: #c2410c; font-weight: 900; }
 .dot-char { position: relative; display: inline-block; }
-.dot-char::before { content: ""; position: absolute; top: -.42em; left: 50%; transform: translateX(-50%); width: .16em; height: .16em; border-radius: 50%; background: #c2410c; }
+.dot-char::before { content: ""; position: absolute; top: -.30em; left: 50%; transform: translateX(-50%); width: .16em; height: .16em; border-radius: 50%; background: #c2410c; }
 .brand-branch { font-size: .98rem; font-weight: 700; letter-spacing: -.025em; }
 .power-o { position: relative; display: inline-block; width: .82em; height: .82em; line-height: .82em; box-sizing: border-box; text-align: center; color: transparent; border: .11em solid var(--blue); border-radius: 50%; margin: 0 .04em; vertical-align: -.04em; }
 .power-o::after { content: ""; position: absolute; width: .11em; height: .4em; background: var(--blue); border: .06em solid #fff; border-radius: 999px; left: 50%; top: -.17em; transform: translateX(-50%); }
@@ -129,7 +129,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round
 .quick-card:hover, .quick-card:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,58,130,.10); border-color: var(--card-accent); outline: none; }
 .quick-icon { width: 52px; height: 52px; display: grid; place-items: center; color: var(--card-accent); margin-bottom: 13px; }
 .quick-icon svg { width: 46px; height: 46px; stroke-width: 1.7; }
-.quick-title { font-size: 1.08rem; line-height: 1.35; letter-spacing: -.035em; font-weight: 900; padding-right: 18px; white-space: pre-line; }
+.quick-title { font-size: 1.08rem; line-height: 1.35; letter-spacing: -.035em; font-weight: 900; padding-right: 18px; white-space: pre-line; word-break: keep-all; overflow-wrap: normal; }
 .quick-description { margin-top: auto; padding-top: 12px; color: #586174; font-size: .82rem; line-height: 1.45; }
 .quick-chevron { position: absolute; right: 15px; bottom: 15px; font-size: 1.75rem; color: #172033; }
 .empty-state { text-align: center; padding: 38px 20px; border: 1px dashed #c7d1df; border-radius: var(--radius-md); color: var(--muted); }
@@ -229,23 +229,30 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round
 .noscript { position: fixed; inset: auto 20px 20px; background: #7a271a; color: #fff; padding: 14px; border-radius: 12px; z-index: 2000; }
 
 @media (max-width: 620px) {
-  .app-shell { padding-left: 16px; padding-right: 16px; }
-  .hero-content { min-height: 0; padding: 26px 22px 24px; grid-template-columns: 1fr; align-items: stretch; gap: 18px; }
-  .hero-copy { grid-column: 1 / -1; padding-right: 0; }
-  .hero-visual { position: static; flex-direction: row; width: 100%; height: auto; justify-content: center; align-items: center; gap: 18px; }
-  .traffic-light { padding: 9px; gap: 8px; }
-  .light { width: 36px; }
-  .hero-mascot { width: 128px; max-height: 150px; }
-  .eyebrow { font-size: 1.42rem; }
-  .status-title { font-size: clamp(2rem, 9vw, 2.7rem); }
-  .status-summary { max-width: none; }
-  .hero-actions { max-width: none; }
-  .notice-button { grid-template-columns: 1fr 28px; min-height: 112px; }
+  .app-shell { padding-left: 14px; padding-right: 14px; }
+  .hero-content { min-height: 278px; padding: 24px 18px 20px; grid-template-columns: minmax(0,1.28fr) minmax(96px,.72fr); align-items: center; gap: 10px; }
+  .hero-copy { grid-column: auto; padding-right: 0; min-width: 0; }
+  .hero-visual { position: static; flex-direction: column; width: 100%; height: 100%; justify-content: space-between; align-items: center; gap: 10px; }
+  .traffic-light { padding: 7px; gap: 6px; border-width: 4px; }
+  .light { width: clamp(27px, 8vw, 34px); }
+  .hero-mascot { width: min(100%, 112px); max-height: 128px; }
+  .eyebrow { font-size: clamp(1.05rem, 4.5vw, 1.35rem); margin-bottom: 10px; }
+  .status-title { font-size: clamp(1.68rem, 7.6vw, 2.25rem); }
+  .status-summary { max-width: none; font-size: .88rem; line-height: 1.52; }
+  .hero-actions { max-width: none; margin-top: 16px; gap: 7px; }
+  .primary-button, .ghost-button { min-height: 42px; padding: 0 11px; font-size: .78rem; }
+  .updated-at { margin-top: 10px; font-size: .72rem; }
+  .notice-button { grid-template-columns: 1fr 28px; min-height: 108px; }
   .notice-label { grid-column: 1; }
   .notice-preview { grid-column: 1; }
   .chevron { grid-column: 2; grid-row: 1 / 3; }
-  .quick-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .quick-card { min-height: 158px; }
+  .quick-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 9px; }
+  .quick-card { min-height: 146px; padding: 14px 10px 12px; }
+  .quick-icon { width: 42px; height: 42px; margin-bottom: 9px; }
+  .quick-icon svg { width: 38px; height: 38px; }
+  .quick-title { font-size: clamp(.76rem, 3.35vw, .9rem); line-height: 1.35; padding-right: 8px; word-break: keep-all; overflow-wrap: normal; }
+  .quick-description { font-size: .69rem; line-height: 1.38; padding-top: 8px; padding-right: 4px; word-break: keep-all; }
+  .quick-chevron { right: 9px; bottom: 9px; font-size: 1.35rem; }
   .reminder-banner { grid-template-columns: 98px 1fr; min-height: 114px; padding-left: 9px; padding-right: 9px; }
   .mascot-pair { width: 96px; max-height: 104px; }
   .reminder-copy strong { font-size: .94rem; }
@@ -261,21 +268,21 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round
   .header-actions { gap: 0; }
   .icon-button { width: 40px; height: 42px; }
   .search-box { height: 56px; padding: 0 14px; }
-  .hero-content { min-height: 0; padding: 22px 16px 18px; }
+  .hero-content { min-height: 264px; padding: 21px 14px 18px; grid-template-columns: minmax(0,1.3fr) minmax(88px,.7fr); gap: 8px; }
   .hero-copy { padding-right: 0; }
-  .hero-visual { width: 100%; gap: 12px; }
-  .hero-mascot { width: 104px; }
-  .traffic-light { border-width: 4px; padding: 7px; }
-  .light { width: 29px; }
-  .status-title { font-size: 2rem; }
-  .status-summary { font-size: .91rem; max-width: 220px; }
+  .hero-visual { width: 100%; gap: 8px; }
+  .hero-mascot { width: 92px; max-height: 112px; }
+  .traffic-light { border-width: 4px; padding: 6px; gap: 5px; }
+  .light { width: 27px; }
+  .status-title { font-size: 1.72rem; }
+  .status-summary { font-size: .82rem; max-width: none; }
   .primary-button, .ghost-button { padding: 0 13px; font-size: .82rem; }
-  .quick-grid { gap: 10px; }
-  .quick-card { padding: 16px 13px 13px; min-height: 151px; }
-  .quick-icon { width: 45px; height: 45px; margin-bottom: 9px; }
-  .quick-icon svg { width: 40px; height: 40px; }
-  .quick-title { font-size: .96rem; }
-  .quick-description { font-size: .75rem; padding-right: 10px; }
+  .quick-grid { gap: 7px; }
+  .quick-card { padding: 12px 8px 10px; min-height: 140px; }
+  .quick-icon { width: 38px; height: 38px; margin-bottom: 7px; }
+  .quick-icon svg { width: 35px; height: 35px; }
+  .quick-title { font-size: .75rem; line-height: 1.32; padding-right: 5px; }
+  .quick-description { font-size: .64rem; padding-right: 2px; }
   .reminder-banner { grid-template-columns: 78px 1fr; }
   .mascot-pair { width: 76px; }
   .reminder-copy strong { font-size: .84rem; }
@@ -480,7 +487,7 @@ window.SAFETY_CONFIG = {
     }
     notices.slice(0, 2).forEach((notice) => {
       const span = document.createElement("span");
-      span.textContent = [notice.title, notice.time].filter(Boolean).join(" ");
+      span.textContent = notice.title;
       elements.noticePreview.append(span);
     });
   }
@@ -620,7 +627,7 @@ window.SAFETY_CONFIG = {
           <span class="notice-badge ${escapeHtml(notice.type || "안내")}">${escapeHtml(notice.type || "안내")}</span>
           <h3>${escapeHtml(notice.title || "안전공지")}</h3>
         </div>
-        <p class="notice-meta">${escapeHtml([notice.date, notice.time, notice.location].filter(Boolean).join(" · "))}</p>
+        <p class="notice-meta">${escapeHtml([notice.location].filter(Boolean).join(" · "))}</p>
         <p>${escapeHtml(notice.content || "세부내용이 없습니다.")}</p>
       </article>`).join("") : "<p>등록된 안전이슈가 없습니다.</p>";
     openModal("오늘의 안전이슈", "안전공지", `<div class="notice-list">${html}</div>`);
@@ -855,10 +862,14 @@ window.SAFETY_CONFIG = {
   }
 
   function applyNotices(rows) {
-    const notices = rows.map(row => ({
-      id: row.id, type: row.type || "안내", title: row.title || "안전공지",
-      date: row.event_date || "", time: row.event_time || "", location: row.location || "", content: row.content || ""
-    }));
+    const today = kstDateString();
+    const notices = rows
+      .filter(row => (!row.publish_start || row.publish_start <= today) && (!row.publish_end || row.publish_end >= today))
+      .map(row => ({
+        id: row.id, type: row.type || "안내", title: row.title || "안전공지",
+        location: row.location || "", content: row.content || "",
+        publishStart: row.publish_start || "", publishEnd: row.publish_end || ""
+      }));
     window.SAFETY_CONFIG.notices = notices;
     const badge = document.getElementById("noticeBadge");
     const bell = document.getElementById("noticeBellButton");
@@ -871,7 +882,7 @@ window.SAFETY_CONFIG = {
       const span = document.createElement("span"); span.textContent = "등록된 안전이슈가 없습니다."; preview.append(span); return;
     }
     notices.slice(0, 2).forEach(notice => {
-      const span = document.createElement("span"); span.textContent = [notice.title, notice.time].filter(Boolean).join(" "); preview.append(span);
+      const span = document.createElement("span"); span.textContent = notice.title; preview.append(span);
     });
   }
 
@@ -880,6 +891,10 @@ window.SAFETY_CONFIG = {
       .on("postgres_changes", { event: "*", schema: "public", table: "safety_status" }, () => loadRemoteSafetyData(false))
       .on("postgres_changes", { event: "*", schema: "public", table: "safety_notices" }, () => loadRemoteSafetyData(false))
       .subscribe();
+  }
+
+  function kstDateString() {
+    return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
   }
 
   function formatDateTime(value) {
