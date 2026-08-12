@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3a82">
+  <meta name="robots" content="noindex,nofollow">
+  <title>직원 비상대응 매뉴얼 | 안전ON</title>
+  <style>
+    :root{
+      --navy:#0b3a82; --blue:#1268e5; --green:#2e9b43; --red:#e7473c; --orange:#ef6a3a;
+      --ink:#172033; --muted:#697386; --line:#dce3ec; --page:#f4f7fb; --surface:#fff;
+      --shadow:0 12px 32px rgba(11,58,130,.10);
+      font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    }
+    *{box-sizing:border-box} body{margin:0;background:var(--page);color:var(--ink);min-width:320px}
+    button,input{font:inherit} button,a{-webkit-tap-highlight-color:transparent}
+    .shell{width:min(100%,760px);min-height:100vh;margin:0 auto;background:#fff;padding:18px 20px 48px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .back{display:inline-flex;align-items:center;gap:7px;color:var(--navy);text-decoration:none;font-weight:900}
+    .back svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .brand{font-weight:950;color:var(--blue);font-size:1.2rem;letter-spacing:-.04em}
+    .staff-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;background:#fff1d7;color:#a25a00;font-size:.72rem;font-weight:900}
+    .card{border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:var(--shadow)}
+    .auth-card{padding:28px 24px;max-width:520px;margin:9vh auto 0}
+    .lock{width:64px;height:64px;margin:0 auto 14px;border-radius:20px;display:grid;place-items:center;background:#eef5ff;color:var(--navy)}
+    .lock svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.8}
+    .auth-card h1{text-align:center;margin:0;font-size:1.55rem;letter-spacing:-.045em}
+    .auth-lead{text-align:center;color:var(--muted);font-size:.9rem;line-height:1.6;margin:8px 0 22px;word-break:keep-all}
+    label{display:block;font-size:.82rem;font-weight:850;color:#344054;margin:13px 0 7px}
+    input{width:100%;height:50px;border:1.4px solid #cbd5e1;border-radius:13px;padding:0 14px;outline:0}
+    input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,104,229,.10)}
+    .primary{width:100%;min-height:50px;border:0;border-radius:13px;background:var(--navy);color:#fff;font-weight:900;cursor:pointer;margin-top:17px}
+    .auth-msg{min-height:22px;text-align:center;margin:12px 0 0;color:var(--red);font-size:.82rem}
+    .manual[hidden],.auth-card[hidden]{display:none!important}
+    .manual-head{border-radius:24px;background:linear-gradient(145deg,#0d6ce6,#074baf);color:#fff;padding:24px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+    .manual-head::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;bottom:-100px;background:rgba(255,255,255,.09)}
+    .manual-kicker{margin:0 0 7px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:#cfe2ff}
+    .manual-head h1{margin:0;font-size:clamp(1.75rem,6vw,2.45rem);letter-spacing:-.055em;line-height:1.13}
+    .manual-head p{margin:10px 0 0;color:rgba(255,255,255,.9);font-size:.91rem;line-height:1.55}
+    .head-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+    .head-actions button{min-height:42px;border-radius:12px;padding:0 14px;font-weight:850;cursor:pointer}
+    .start-btn{border:0;background:#fff;color:#b42318}
+    .logout-btn{border:1px solid rgba(255,255,255,.48);background:rgba(255,255,255,.08);color:#fff}
+    .urgent{margin:16px 0;border:1px solid #ffd0cb;background:#fff5f3;border-radius:20px;padding:17px}
+    .urgent strong{display:block;color:#b42318;font-size:1.03rem;margin-bottom:6px}
+    .urgent p{margin:0;color:#69413d;font-size:.86rem;line-height:1.55;word-break:keep-all}
+    .section{margin:22px 0}
+    .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+    .section-title h2{margin:0;font-size:1.27rem;letter-spacing:-.04em}
+    .section-title span{font-size:.75rem;color:var(--muted);font-weight:800}
+    .contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .contact{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fff;text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .contact:hover{border-color:var(--blue);background:#f6faff}
+    .contact strong{display:block;color:var(--navy);font-size:.87rem;word-break:keep-all}
+    .contact small{display:block;color:var(--muted);margin-top:3px;font-size:.70rem;line-height:1.35;word-break:keep-all}
+    .phone{font-weight:900;color:#0b3a82;font-size:.78rem;white-space:nowrap}
+    .phase-tabs{display:flex;gap:7px;padding:5px;background:#eef2f7;border-radius:14px;margin-bottom:12px}
+    .phase-tabs button{flex:1;min-height:42px;border:0;border-radius:11px;background:transparent;color:#596579;font-weight:900;cursor:pointer}
+    .phase-tabs button.is-active{background:#fff;color:var(--navy);box-shadow:0 4px 12px rgba(11,58,130,.08)}
+    .steps{display:grid;gap:9px}
+    .step{border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px}
+    .step-top{display:flex;gap:11px;align-items:flex-start}
+    .step-no{width:32px;height:32px;border-radius:10px;background:#eef5ff;color:var(--navy);display:grid;place-items:center;font-size:.76rem;font-weight:950;flex:0 0 auto}
+    .step h3{margin:1px 0 5px;font-size:.98rem;letter-spacing:-.035em}
+    .step ul{margin:7px 0 0;padding-left:18px;color:#455064;font-size:.83rem;line-height:1.55}
+    .step li+li{margin-top:5px}
+    .special-grid{display:grid;gap:9px}
+    details{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+    summary{cursor:pointer;padding:15px 16px;font-weight:900;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:10px}
+    summary::-webkit-details-marker{display:none}
+    details[open] summary{border-bottom:1px solid #edf1f5}
+    .detail-body{padding:14px 17px 17px;color:#455064;font-size:.84rem;line-height:1.6}
+    .detail-body p{margin:0 0 9px;word-break:keep-all}.detail-body p:last-child{margin-bottom:0}
+    .detail-body .em{color:#b42318;font-weight:900}
+    .bottom-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:22px}
+    .outline-btn{min-height:48px;border:1px solid #a9c7f3;background:#fff;color:var(--navy);border-radius:13px;font-weight:900;cursor:pointer}
+    .flow-backdrop{position:fixed;z-index:1000;inset:0;background:rgba(8,18,34,.64);display:grid;place-items:end center;padding:12px}
+    .flow-backdrop[hidden]{display:none}
+    .flow{width:min(100%,660px);max-height:92vh;background:#fff;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(0,0,0,.32)}
+    .flow-head{padding:18px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #edf1f5}
+    .flow-head p{margin:0 0 4px;color:#b42318;font-size:.75rem;font-weight:950}
+    .flow-head h2{margin:0;font-size:1.2rem;letter-spacing:-.04em}
+    .close{width:38px;height:38px;border:0;border-radius:12px;background:#eef2f7;font-size:1.4rem;cursor:pointer}
+    .flow-body{padding:18px;overflow:auto}
+    .progress{height:7px;border-radius:99px;background:#e9edf3;overflow:hidden;margin-bottom:18px}
+    .progress span{display:block;height:100%;background:var(--green);transition:width .2s}
+    .flow-step-label{color:var(--green);font-size:.78rem;font-weight:950}
+    .flow-body h3{font-size:1.28rem;margin:5px 0 10px;letter-spacing:-.045em}
+    .flow-body ul{padding-left:20px;margin:0;color:#445065;line-height:1.65;font-size:.91rem}
+    .flow-foot{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:12px 18px 18px}
+    .flow-foot button{min-height:48px;border-radius:12px;font-weight:900;cursor:pointer}
+    .prev{border:1px solid #cbd5e1;background:#fff;color:#475467}
+    .next{border:0;background:var(--green);color:#fff}
+    .toast{position:fixed;z-index:1400;left:50%;bottom:20px;transform:translate(-50%,20px);width:min(calc(100% - 36px),520px);padding:12px 15px;background:#172033;color:#fff;border-radius:13px;text-align:center;font-size:.85rem;opacity:0;pointer-events:none;transition:.2s}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .error-card{padding:20px;border:1px solid #ffd0cb;background:#fff5f3;border-radius:18px;color:#8a2d25;line-height:1.6}
+    @media(max-width:620px){
+      .shell{padding:14px 13px 34px}
+      .manual-head{padding:20px 17px}
+      .contact-grid{grid-template-columns:1fr}
+      .bottom-actions{grid-template-columns:1fr}
+      .flow-backdrop{padding:0}
+      .flow{max-height:94vh;border-radius:24px 24px 0 0}
+    }
+    @media(min-width:761px){body{padding:22px 0}.shell{border-radius:30px;box-shadow:0 18px 55px rgba(11,58,130,.11)}.flow-backdrop{place-items:center}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <a class="back" href="index.html"><svg viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></svg>안전ON</a>
+      <span class="staff-badge">🔒 직원 전용</span>
+    </div>
+
+    <section id="authCard" class="auth-card card">
+      <div class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+      <h1>직원 인증</h1>
+      <p class="auth-lead">직원 비상대응 매뉴얼은 내부 업무정보를 포함하고 있어<br>직원 계정으로 로그인한 뒤 이용할 수 있습니다.</p>
+      <form id="loginForm">
+        <label for="email">이메일</label>
+        <input id="email" type="email" autocomplete="username" required placeholder="직원 계정 이메일">
+        <label for="password">비밀번호</label>
+        <input id="password" type="password" autocomplete="current-password" required placeholder="비밀번호">
+        <button class="primary" type="submit">직원 로그인</button>
+      </form>
+      <p id="authMsg" class="auth-msg" role="alert"></p>
+    </section>
+
+    <section id="manual" class="manual" hidden>
+      <header class="manual-head">
+        <p class="manual-kicker">EMPLOYEE EMERGENCY MANUAL</p>
+        <h1 id="manualTitle">공용차 교통사고 대응</h1>
+        <p id="manualSubtitle">사고 발생 시 현장에서 즉시 확인하는 단계별 대응 절차</p>
+        <div class="head-actions">
+          <button id="startFlow" class="start-btn" type="button">🚨 예, 지금 사고가 났습니다</button>
+          <button id="logoutBtn" class="logout-btn" type="button">로그아웃</button>
+        </div>
+      </header>
+
+      <div class="urgent">
+        <strong>가장 먼저 안전을 확보하세요.</strong>
+        <p>사고 직후에는 비상등 점등·차량 정차, 탑승자 부상 여부 확인, 현장 안전 확보 순으로 대응합니다.</p>
+      </div>
+
+      <section class="section">
+        <div class="section-title"><h2>즉시 연락</h2><span>누르면 전화 연결</span></div>
+        <div id="contactGrid" class="contact-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><h2>단계별 대응 절차</h2><span>현장용 요약</span></div>
+        <div class="phase-tabs" role="tablist">
+          <button id="tabImmediate" class="is-active" type="button">사고 직후</button>
+          <button id="tabAfter" type="button">사고 이후</button>
+        </div>
+        <div id="steps" class="steps"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><h2>상황별 추가 대응</h2><span>야간·고속도로·화재</span></div>
+        <div id="specialGrid" class="special-grid"></div>
+      </section>
+
+      <div class="bottom-actions">
+        <button id="pdfBtn" class="outline-btn" type="button">📄 원본 매뉴얼 PDF 보기</button>
+        <button id="allStepsBtn" class="outline-btn" type="button">☑ 전체 절차 한눈에 보기</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="flowBackdrop" class="flow-backdrop" hidden>
+    <section class="flow" role="dialog" aria-modal="true" aria-labelledby="flowTitle">
+      <div class="flow-head">
+        <div><p>현장 대응 모드</p><h2 id="flowTitle">공용차 교통사고 대응</h2></div>
+        <button id="flowClose" class="close" type="button" aria-label="닫기">×</button>
+      </div>
+      <div class="flow-body">
+        <div class="progress"><span id="progressBar"></span></div>
+        <div id="flowStepLabel" class="flow-step-label"></div>
+        <h3 id="flowStepTitle"></h3>
+        <ul id="flowStepBullets"></ul>
+      </div>
+      <div class="flow-foot">
+        <button id="prevBtn" class="prev" type="button">이전</button>
+        <button id="nextBtn" class="next" type="button">완료 · 다음 단계</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+  const settings = window.SAFETY_ON_SUPABASE || {};
+  let client = null;
+  let manual = null;
+  let phase = "immediate";
+  let flowSteps = [];
+  let flowIndex = 0;
+  let toastTimer = null;
+
+  const $ = (id) => document.getElementById(id);
+  document.addEventListener("DOMContentLoaded", init);
+
+  async function init() {
+    if (!settings.url || !settings.publishableKey || settings.publishableKey.includes("여기에") || !window.supabase?.createClient) {
+      showFatal("Supabase 연결 설정을 확인해 주세요. 기존 supabase-config.js 파일이 필요합니다.");
+      return;
+    }
+    client = window.supabase.createClient(settings.url, settings.publishableKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+
+    bind();
+    const { data } = await client.auth.getSession();
+    if (data?.session) await enterManual();
+  }
+
+  function bind() {
+    $("loginForm").addEventListener("submit", login);
+    $("logoutBtn").addEventListener("click", logout);
+    $("tabImmediate").addEventListener("click", () => setPhase("immediate"));
+    $("tabAfter").addEventListener("click", () => setPhase("after"));
+    $("startFlow").addEventListener("click", openFlow);
+    $("allStepsBtn").addEventListener("click", openFlow);
+    $("flowClose").addEventListener("click", closeFlow);
+    $("flowBackdrop").addEventListener("click", (e) => { if (e.target === $("flowBackdrop")) closeFlow(); });
+    $("prevBtn").addEventListener("click", () => moveFlow(-1));
+    $("nextBtn").addEventListener("click", () => moveFlow(1));
+    $("pdfBtn").addEventListener("click", openPdf);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("flowBackdrop").hidden) closeFlow(); });
+  }
+
+  async function login(e) {
+    e.preventDefault();
+    $("authMsg").textContent = "";
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    const { error } = await client.auth.signInWithPassword({ email, password });
+    if (error) {
+      $("authMsg").textContent = "로그인 정보를 확인해 주세요.";
+      return;
+    }
+    await enterManual();
+  }
+
+  async function logout() {
+    await client.auth.signOut();
+    manual = null;
+    $("manual").hidden = true;
+    $("authCard").hidden = false;
+    $("password").value = "";
+    $("email").focus();
+  }
+
+  async function enterManual() {
+    const { data: sessionData } = await client.auth.getSession();
+    if (!sessionData?.session) return;
+    const { data, error } = await client.from("employee_manuals")
+      .select("slug,title,subtitle,content,updated_at")
+      .eq("slug","public-vehicle-accident")
+      .maybeSingle();
+
+    if (error || !data) {
+      console.error(error);
+      $("authCard").hidden = true;
+      $("manual").hidden = false;
+      $("manual").innerHTML = '<div class="error-card"><strong>매뉴얼을 불러오지 못했습니다.</strong><br>Supabase에서 직원 매뉴얼 설정 SQL을 먼저 실행했는지 확인해 주세요.</div>';
+      return;
+    }
+    manual = data;
+    $("manualTitle").textContent = data.title || "공용차 교통사고 대응";
+    $("manualSubtitle").textContent = data.subtitle || "";
+    $("authCard").hidden = true;
+    $("manual").hidden = false;
+    renderContacts();
+    setPhase("immediate");
+    renderSpecials();
+  }
+
+  function renderContacts() {
+    const rows = manual?.content?.contacts || [];
+    $("contactGrid").innerHTML = rows.map(c => {
+      const clean = String(c.number || "").replace(/[^\d]/g,"");
+      return `<a class="contact" href="${clean ? `tel:${clean}` : "#"}">
+        <div><strong>${esc(c.name)}</strong><small>${esc(c.role || "")}</small></div>
+        <span class="phone">${esc(c.number || "")}</span>
+      </a>`;
+    }).join("");
+  }
+
+  function setPhase(next) {
+    phase = next;
+    $("tabImmediate").classList.toggle("is-active", next === "immediate");
+    $("tabAfter").classList.toggle("is-active", next === "after");
+    const rows = manual?.content?.[next] || [];
+    $("steps").innerHTML = rows.map((row,i) => `
+      <article class="step">
+        <div class="step-top">
+          <span class="step-no">${i+1}</span>
+          <div><h3>${esc(row.title)}</h3>${bulletHtml(row.bullets)}</div>
+        </div>
+      </article>`).join("");
+  }
+
+  function renderSpecials() {
+    const rows = manual?.content?.specials || [];
+    $("specialGrid").innerHTML = rows.map(row => `
+      <details>
+        <summary>${esc(row.title)} <span>＋</span></summary>
+        <div class="detail-body">${(row.paragraphs||[]).map(p => `<p>${esc(p)}</p>`).join("")}</div>
+      </details>`).join("");
+  }
+
+  function openFlow() {
+    flowSteps = [
+      ...(manual?.content?.immediate || []).map(x => ({...x, phase:"사고 직후"})),
+      ...(manual?.content?.after || []).map(x => ({...x, phase:"사고 이후"}))
+    ];
+    flowIndex = 0;
+    renderFlow();
+    $("flowBackdrop").hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+  function closeFlow() {
+    $("flowBackdrop").hidden = true;
+    document.body.style.overflow = "";
+  }
+  function moveFlow(delta) {
+    if (!flowSteps.length) return;
+    if (delta > 0 && flowIndex === flowSteps.length - 1) { closeFlow(); toast("전체 사고 대응 절차를 확인했습니다."); return; }
+    flowIndex = Math.max(0, Math.min(flowSteps.length - 1, flowIndex + delta));
+    renderFlow();
+  }
+  function renderFlow() {
+    const row = flowSteps[flowIndex];
+    if (!row) return;
+    $("flowStepLabel").textContent = `${row.phase} · STEP ${flowIndex + 1} / ${flowSteps.length}`;
+    $("flowStepTitle").textContent = row.title;
+    $("flowStepBullets").innerHTML = (row.bullets || []).map(x => `<li>${esc(x)}</li>`).join("");
+    $("progressBar").style.width = `${((flowIndex + 1) / flowSteps.length) * 100}%`;
+    $("prevBtn").disabled = flowIndex === 0;
+    $("nextBtn").textContent = flowIndex === flowSteps.length - 1 ? "확인 완료" : "완료 · 다음 단계";
+  }
+
+  async function openPdf() {
+    const pdf = manual?.content?.pdf;
+    if (!pdf?.bucket || !pdf?.path) { toast("원본 PDF 연결정보가 없습니다."); return; }
+    const { data, error } = await client.storage.from(pdf.bucket).createSignedUrl(pdf.path, 60);
+    if (error || !data?.signedUrl) {
+      console.error(error); toast("원본 PDF가 아직 업로드되지 않았습니다."); return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  }
+
+  function bulletHtml(items) {
+    if (!Array.isArray(items) || !items.length) return "";
+    return `<ul>${items.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  }
+  function esc(v) {
+    return String(v ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+  }
+  function toast(msg) {
+    $("toast").textContent = msg; $("toast").classList.add("show"); clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => $("toast").classList.remove("show"), 2600);
+  }
+  function showFatal(msg) {
+    $("authCard").innerHTML = `<div class="error-card">${esc(msg)}</div>`;
+  }
+})();
+</script>
+</body>
+</html>
