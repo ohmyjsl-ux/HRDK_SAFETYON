@@ -207,6 +207,7 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
 .notice-badge.일반 { background: #eaf4ff; color: var(--blue); }
 .notice-badge.안내 { background: #edf8ee; color: #237d35; }
 .notice-item h3 { margin: 0; color: var(--ink); }
+.notice-content { margin: 8px 0 0; color: var(--ink); font-size: .95rem; line-height: 1.62; white-space: pre-line; word-break: keep-all; overflow-wrap: anywhere; }
 .notice-meta { color: var(--muted); font-size: .83rem; margin: 8px 0; }
 .contact-list, .content-list { display: grid; gap: 10px; }
 .contact-button, .content-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid #dce3ec; border-radius: 15px; padding: 15px 16px; background: #fff; color: inherit; text-decoration: none; width: 100%; font: inherit; text-align: left; cursor: default; }
@@ -255,12 +256,26 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
 
 @media (max-width: 620px) {
   .app-shell { padding-left: 14px; padding-right: 14px; }
-  .hero-content { min-height: 278px; padding: 24px 18px 20px; grid-template-columns: minmax(0,1.28fr) minmax(96px,.72fr); align-items: center; gap: 10px; }
-  .hero-copy { grid-column: auto; padding-right: 0; min-width: 0; }
-  .hero-visual { position: static; flex-direction: column; width: 100%; height: 100%; justify-content: space-between; align-items: center; gap: 10px; }
-  .traffic-light { padding: 7px; gap: 6px; border-width: 4px; }
-  .light { width: clamp(27px, 8vw, 34px); }
-  .hero-mascot { width: min(100%, 112px); max-height: 128px; }
+  .hero-content {
+    min-height: 278px; padding: 24px 18px 20px;
+    display: grid; grid-template-columns: minmax(0,1fr) auto;
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "title   light"
+      "summary mascot"
+      "actions mascot"
+      "updated mascot";
+    align-items: center; column-gap: 14px; row-gap: 4px;
+  }
+  .hero-copy, .hero-visual { display: contents; }
+  .eyebrow { grid-area: eyebrow; margin-bottom: 6px; }
+  .status-title { grid-area: title; }
+  .status-summary { grid-area: summary; max-width: none; }
+  .hero-actions { grid-area: actions; }
+  .updated-at { grid-area: updated; }
+  .traffic-light { grid-area: light; justify-self: end; align-self: center; padding: 7px; gap: 6px; border-width: 4px; }
+  .light { width: clamp(24px, 6.6vw, 30px); }
+  .hero-mascot { grid-area: mascot; justify-self: end; align-self: end; width: min(100%, 108px); max-height: 120px; }
   .eyebrow { font-size: clamp(1.05rem, 4.5vw, 1.35rem); margin-bottom: 10px; }
   .status-title { font-size: clamp(1.68rem, 7.6vw, 2.25rem); }
   .status-summary { max-width: none; font-size: .88rem; line-height: 1.52; }
@@ -293,7 +308,7 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
   .header-actions { gap: 0; }
   .icon-button { width: 40px; height: 42px; }
   .search-box { height: 56px; padding: 0 14px; }
-  .hero-content { min-height: 264px; padding: 21px 14px 18px; grid-template-columns: minmax(0,1.3fr) minmax(88px,.7fr); gap: 8px; }
+  .hero-content { min-height: 264px; padding: 21px 14px 18px; grid-template-columns: minmax(0,1fr) auto; column-gap: 12px; row-gap: 4px; }
   .hero-copy { padding-right: 0; }
   .hero-visual { width: 100%; gap: 8px; }
   .hero-mascot { width: 92px; max-height: 112px; }
@@ -720,7 +735,7 @@ window.SAFETY_CONFIG = {
           <h3>${escapeHtml(notice.title || "안전공지")}</h3>
         </div>
         
-        <p>${escapeHtml(notice.content || "세부내용이 없습니다.")}</p>
+        <p class="notice-content">${escapeHtml(notice.content || "세부내용이 없습니다.")}</p>
       </article>`).join("") : "<p>등록된 안전이슈가 없습니다.</p>";
     openModal("오늘의 안전이슈", "안전공지", `<div class="notice-list">${html}</div>`);
   }
@@ -1114,39 +1129,39 @@ window.SAFETY_CONFIG = {
           </div>
 
           <div class="employee-grid">
-            <a class="employee-card" href="employee-manual.html" aria-label="공용차 교통사고 대응 매뉴얼 열기">
+            <a class="employee-card" href="employee-manual.html" aria-label="공용차 교통사고 발생 시 매뉴얼 열기">
               <span class="employee-card-icon" aria-hidden="true">
                 <svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 33v-5.4c0-.7.3-1.4.8-1.9l3.6-3.3 2.4-4.6c.5-1 1.5-1.6 2.6-1.6h11.9c.8 0 1.6.3 2.1.9l4.6 5 5.3 1.7c1.7.5 2.7 2 2.7 3.7V33a2.5 2.5 0 0 1-2.5 2.5h-31A2.5 2.5 0 0 1 6 33Z" fill="#2563EB"/><path d="M15.6 20.5h11.6l3.8 4.2H13.5l2.1-4.2Z" fill="#DCEAFD"/><circle cx="15" cy="35" r="5" fill="#1E293B"/><circle cx="15" cy="35" r="1.9" fill="#fff"/><circle cx="34" cy="35" r="5" fill="#1E293B"/><circle cx="34" cy="35" r="1.9" fill="#fff"/><path d="M42 8.5 38 15l4.5.6-4.5 5.4" fill="none" stroke="#F97316" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
-              <span class="employee-card-title">공용차<br>교통사고 대응</span>
+              <span class="employee-card-title">공용차<br>교통사고 발생 시</span>
               <span class="employee-card-desc">사고 직후 안전조치부터 보험접수·보고까지</span>
               <span class="employee-card-arrow" aria-hidden="true">›</span>
             </a>
 
-            <button class="employee-card is-disabled" type="button" data-coming-soon="직원 부상·응급상황 대응">
+            <button class="employee-card is-disabled" type="button" data-coming-soon="직원 부상·응급상황 발생 시">
               <span class="employee-card-state">준비 중</span>
               <span class="employee-card-icon" aria-hidden="true">
                 <svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M17.5 16v-2.8a3.5 3.5 0 0 1 3.5-3.5h6a3.5 3.5 0 0 1 3.5 3.5V16" fill="none" stroke="#1D4ED8" stroke-width="3.4" stroke-linecap="round"/><rect x="6" y="15.5" width="36" height="23" rx="5" fill="#2563EB"/><path d="M21.6 20.6h4.8v3.6H30v4.8h-3.6V33h-4.8v-4h-3.6v-4.8h3.6v-3.6Z" fill="#fff"/></svg>
               </span>
-              <span class="employee-card-title">직원 부상·<br>응급상황 대응</span>
+              <span class="employee-card-title">직원 부상·<br>응급상황 발생 시</span>
               <span class="employee-card-desc">응급처치 및 내부보고 절차</span>
             </button>
 
-            <button class="employee-card is-disabled" type="button" data-coming-soon="화재·재난 대응">
+            <button class="employee-card is-disabled" type="button" data-coming-soon="화재·재난 발생 시">
               <span class="employee-card-state">준비 중</span>
               <span class="employee-card-icon" aria-hidden="true">
                 <svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 43c8.3 0 13.6-5.4 13.6-12.9 0-6-3.8-11.6-9.8-17 .5 5.9-2.4 8.3-4.7 10.1.4-8.5-4.7-13.7-8.3-18.1.4 8.5-5.8 12.6-5.8 20.8C9 36.6 15.4 43 24 43Z" fill="#EF4444"/><path d="M24 43c4.1 0 6.9-2.9 6.9-6.7 0-3.5-2.4-5.4-4.7-8.7-.3 3.3-2 4.4-3.4 5.6-1.5-1.6-1.9-3.5-1.9-5.4-2.4 2.7-3.8 5.2-3.8 8.5C17.1 40 20 43 24 43Z" fill="#FBBF24"/></svg>
               </span>
-              <span class="employee-card-title">화재·재난<br>대응</span>
+              <span class="employee-card-title">화재·재난<br>발생 시</span>
               <span class="employee-card-desc">신고·대피·초기대응 절차</span>
             </button>
 
-            <button class="employee-card is-disabled" type="button" data-coming-soon="출장·현장사고 대응">
+            <button class="employee-card is-disabled" type="button" data-coming-soon="출장·현장사고 발생 시">
               <span class="employee-card-state">준비 중</span>
               <span class="employee-card-icon" aria-hidden="true">
                 <svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M17.5 15.5v-2.3a3.5 3.5 0 0 1 3.5-3.5h6a3.5 3.5 0 0 1 3.5 3.5v2.3" fill="none" stroke="#1D4ED8" stroke-width="3.4" stroke-linecap="round"/><rect x="5.5" y="15" width="37" height="23.5" rx="5" fill="#2563EB"/><rect x="5.5" y="23" width="37" height="3.6" fill="#1D4ED8"/><rect x="19.5" y="21" width="9" height="7.5" rx="2" fill="#fff"/></svg>
               </span>
-              <span class="employee-card-title">출장·현장사고<br>대응</span>
+              <span class="employee-card-title">출장·현장사고<br>발생 시</span>
               <span class="employee-card-desc">출장 중 사고·위험상황 대응</span>
             </button>
           </div>
