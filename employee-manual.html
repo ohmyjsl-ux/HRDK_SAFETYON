@@ -30,7 +30,11 @@
     .back{display:inline-flex;align-items:center;gap:7px;color:var(--navy);text-decoration:none;font-size:.98rem;font-weight:700;letter-spacing:-.025em}
     .back svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .brand{font-weight:800;color:var(--blue);font-size:1.2rem;letter-spacing:-.045em}
+    .topbar-right{display:flex;align-items:center;gap:6px;flex:0 0 auto}
     .staff-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;background:#fff1d7;color:#a25a00;font-size:.76rem;font-weight:700;letter-spacing:-.02em}
+    .top-logout-btn{display:none;min-height:28px;padding:0 8px;border:1px solid #d6dde8;border-radius:9px;background:#fff;color:#667085;font-size:.7rem;font-weight:700;letter-spacing:-.02em;cursor:pointer;white-space:nowrap}
+    .top-logout-btn:hover,.top-logout-btn:focus-visible{border-color:#9db9e6;color:var(--navy);background:#f6f9ff;outline:none}
+    .top-logout-btn.is-visible{display:inline-flex;align-items:center;justify-content:center}
     .card{border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:var(--shadow)}
     .auth-card{padding:28px 24px;max-width:520px;margin:9vh auto 0}
     .lock{width:64px;height:64px;margin:0 auto 14px;border-radius:20px;display:grid;place-items:center;background:#eef5ff;color:var(--navy)}
@@ -60,7 +64,6 @@
     .head-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
     .head-actions button{min-height:44px;border-radius:12px;padding:0 15px;font-size:.94rem;font-weight:700;letter-spacing:-.025em;cursor:pointer}
     .start-btn{border:0;background:#fff;color:#b42318}
-    .logout-btn{border:1px solid rgba(255,255,255,.48);background:rgba(255,255,255,.08);color:#fff}
     .urgent{margin:16px 0;border:1px solid #ffd0cb;background:#fff5f3;border-radius:20px;padding:17px}
     .urgent strong{display:block;color:#b42318;font-size:1.06rem;font-weight:800;letter-spacing:-.03em;margin-bottom:7px}
     .urgent p{margin:0;color:#69413d;font-size:.92rem;font-weight:500;line-height:1.6;word-break:keep-all}
@@ -68,8 +71,17 @@
     .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
     .section-title h2{margin:0;font-size:var(--fs-h2);letter-spacing:-.035em;font-weight:800;line-height:1.3}
     .section-title span{font-size:.8rem;color:var(--muted);font-weight:600}
-    .contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-    .contact{border:1px solid var(--line);border-radius:16px;padding:15px 14px;background:#fff;text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 6px 14px rgba(11,58,130,.05)}
+    .contact-groups{display:grid;gap:15px}
+    .contact-group{border:1px solid #e2e8f0;border-radius:18px;background:#f9fbfe;padding:13px}
+    .contact-group-head{display:flex;align-items:center;gap:9px;margin:0 0 10px;padding:0 2px}
+    .contact-group-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:1rem;flex:0 0 auto}
+    .contact-group-title{font-size:.98rem;font-weight:800;letter-spacing:-.03em;color:#24324a}
+    .contact-group-sub{margin-left:auto;font-size:.72rem;font-weight:600;color:#8490a3}
+    .contact-group.emergency .contact-group-icon{background:#fff0ee;color:#c7382d}
+    .contact-group.corporation .contact-group-icon{background:#eaf4ff;color:#0b5ec7}
+    .contact-group.insurance .contact-group-icon{background:#edf8ee;color:#287c3a}
+    .contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .contact{border:1px solid var(--line);border-radius:14px;padding:13px 13px;background:#fff;text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 4px 11px rgba(11,58,130,.035)}
     .contact:hover{border-color:var(--blue);background:#f6faff}
     .contact strong{display:block;color:var(--navy);font-size:1rem;font-weight:700;letter-spacing:-.025em;word-break:keep-all}
     .contact small{display:block;color:var(--muted);margin-top:5px;font-size:.83rem;font-weight:500;line-height:1.45;word-break:keep-all}
@@ -94,21 +106,22 @@
     .detail-body .em{color:#b42318;font-weight:800}
     .bottom-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:22px}
     .outline-btn{min-height:50px;border:1px solid #a9c7f3;background:#fff;color:var(--navy);border-radius:13px;font-size:.96rem;font-weight:700;letter-spacing:-.025em;cursor:pointer}
-    .flow-backdrop{position:fixed;z-index:1000;inset:0;background:rgba(8,18,34,.64);display:grid;place-items:end center;padding:12px}
+    .flow-backdrop{position:fixed;z-index:1000;inset:0;background:rgba(8,18,34,.70);display:grid;place-items:center;padding:16px}
     .flow-backdrop[hidden]{display:none}
-    .flow{width:min(100%,660px);max-height:92vh;background:#fff;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(0,0,0,.32)}
-    .flow-head{padding:18px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #edf1f5}
-    .flow-head p{margin:0 0 4px;color:#b42318;font-size:.78rem;font-weight:800;letter-spacing:.02em}
-    .flow-head h2{margin:0;font-size:1.22rem;letter-spacing:-.032em;font-weight:800}
-    .close{width:38px;height:38px;border:0;border-radius:12px;background:#eef2f7;font-size:1.4rem;cursor:pointer}
-    .flow-body{padding:18px;overflow:auto}
-    .progress{height:7px;border-radius:99px;background:#e9edf3;overflow:hidden;margin-bottom:18px}
+    .flow{width:min(100%,720px);height:min(90vh,820px);max-height:none;background:#fff;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 28px 80px rgba(0,0,0,.36)}
+    .flow-head{padding:22px 22px 16px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #e6ebf1}
+    .flow-head p{margin:0 0 5px;color:#b42318;font-size:.84rem;font-weight:800;letter-spacing:.02em}
+    .flow-head h2{margin:0;font-size:1.42rem;letter-spacing:-.035em;font-weight:800}
+    .close{width:42px;height:42px;border:0;border-radius:13px;background:#eef2f7;font-size:1.55rem;cursor:pointer;flex:0 0 auto}
+    .flow-body{padding:24px 24px 20px;overflow:auto;flex:1;display:flex;flex-direction:column}
+    .progress{height:9px;border-radius:99px;background:#e9edf3;overflow:hidden;margin-bottom:24px;flex:0 0 auto}
     .progress span{display:block;height:100%;background:var(--green);transition:width .2s}
-    .flow-step-label{color:var(--green);font-size:.82rem;font-weight:800;letter-spacing:.01em}
-    .flow-body h3{font-size:1.3rem;margin:6px 0 11px;letter-spacing:-.035em;font-weight:800;line-height:1.35}
-    .flow-body ul{padding-left:20px;margin:0;color:#445065;line-height:1.72;font-size:var(--fs-body);font-weight:500}
-    .flow-foot{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:12px 18px 18px}
-    .flow-foot button{min-height:50px;border-radius:12px;font-size:.98rem;font-weight:700;letter-spacing:-.025em;cursor:pointer}
+    .flow-step-label{color:var(--green);font-size:.9rem;font-weight:800;letter-spacing:.01em}
+    .flow-body h3{font-size:clamp(1.55rem,5vw,1.9rem);margin:8px 0 18px;letter-spacing:-.04em;font-weight:800;line-height:1.3}
+    .flow-body ul{padding-left:22px;margin:0;color:#364258;line-height:1.78;font-size:clamp(1rem,3.7vw,1.12rem);font-weight:500}
+    .flow-body li+li{margin-top:10px}
+    .flow-foot{display:grid;grid-template-columns:1fr 1.45fr;gap:10px;padding:14px 24px 22px;border-top:1px solid #edf1f5;background:#fff}
+    .flow-foot button{min-height:56px;border-radius:14px;font-size:1.02rem;font-weight:700;letter-spacing:-.025em;cursor:pointer}
     .prev{border:1px solid #cbd5e1;background:#fff;color:#475467}
     .next{border:0;background:var(--green);color:#fff}
     .toast{position:fixed;z-index:1400;left:50%;bottom:20px;transform:translate(-50%,20px);width:min(calc(100% - 36px),520px);padding:13px 16px;background:#172033;color:#fff;border-radius:13px;text-align:center;font-size:.9rem;font-weight:500;opacity:0;pointer-events:none;transition:.2s}
@@ -119,9 +132,17 @@
       .manual-head h1{font-size:clamp(1.8rem,7.2vw,2.2rem)}
       .manual-head{padding:20px 17px}
       .contact-grid{grid-template-columns:1fr}
+      .contact-group{padding:11px}
       .bottom-actions{grid-template-columns:1fr}
-      .flow-backdrop{padding:0}
-      .flow{max-height:94vh;border-radius:24px 24px 0 0}
+      .flow-backdrop{padding:0;place-items:end center}
+      .flow{width:100%;height:96dvh;max-height:96dvh;border-radius:24px 24px 0 0}
+      .flow-head{padding:19px 17px 14px}
+      .flow-head h2{font-size:1.28rem}
+      .flow-body{padding:22px 18px 18px}
+      .flow-body h3{font-size:clamp(1.48rem,7vw,1.8rem);margin-bottom:17px}
+      .flow-body ul{font-size:clamp(1rem,4.2vw,1.08rem);line-height:1.75}
+      .flow-foot{padding:12px 16px calc(16px + env(safe-area-inset-bottom));position:sticky;bottom:0}
+      .flow-foot button{min-height:54px}
     }
     @media(min-width:761px){body{padding:22px 0}.shell{border-radius:30px;box-shadow:0 18px 55px rgba(11,58,130,.11)}.flow-backdrop{place-items:center}}
   </style>
@@ -132,7 +153,10 @@
   <main class="shell">
     <div class="topbar">
       <a class="back" href="index.html"><svg viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></svg>안전ON</a>
-      <span class="staff-badge">🔒 직원 전용</span>
+      <div class="topbar-right">
+        <span class="staff-badge">🔒 직원 전용</span>
+        <button id="logoutBtn" class="top-logout-btn" type="button" aria-label="직원 인증 해제">인증 해제</button>
+      </div>
     </div>
 
     <section id="authCard" class="auth-card card">
@@ -160,7 +184,6 @@
         <p id="manualSubtitle">사고 발생 시 현장에서 즉시 확인하는 단계별 대응 절차</p>
         <div class="head-actions">
           <button id="startFlow" class="start-btn" type="button">🚨 예, 지금 사고가 났습니다</button>
-          <button id="logoutBtn" class="logout-btn" type="button">인증 해제</button>
         </div>
       </header>
 
@@ -171,7 +194,7 @@
 
       <section class="section">
         <div class="section-title"><h2>즉시 연락</h2><span>누르면 전화 연결</span></div>
-        <div id="contactGrid" class="contact-grid"></div>
+        <div id="contactGrid" class="contact-groups"></div>
       </section>
 
       <section class="section">
@@ -188,7 +211,8 @@
         <div id="specialGrid" class="special-grid"></div>
       </section>
 
-      <div class="bottom-actions" style="grid-template-columns:1fr">
+      <div class="bottom-actions">
+        <button id="pdfBtn" class="outline-btn" type="button">📄 원본 매뉴얼 PDF 보기</button>
         <button id="allStepsBtn" class="outline-btn" type="button">☑ 전체 절차 한눈에 보기</button>
       </div>
     </section>
@@ -263,6 +287,7 @@
     $("tabAfter").addEventListener("click", () => setPhase("after"));
     $("startFlow").addEventListener("click", openFlow);
     $("allStepsBtn").addEventListener("click", openFlow);
+    $("pdfBtn").addEventListener("click", openPdf);
     $("flowClose").addEventListener("click", closeFlow);
     $("flowBackdrop").addEventListener("click", (e) => { if (e.target === $("flowBackdrop")) closeFlow(); });
     $("prevBtn").addEventListener("click", () => moveFlow(-1));
@@ -329,6 +354,7 @@
     manual = null;
     $("manual").hidden = true;
     $("authCard").hidden = false;
+    $("logoutBtn").classList.remove("is-visible");
     $("accessCode").value = "";
     $("authMsg").textContent = "";
     $("accessCode").focus();
@@ -340,6 +366,7 @@
     $("manualSubtitle").textContent = manual.subtitle || "";
     $("authCard").hidden = true;
     $("manual").hidden = false;
+    $("logoutBtn").classList.add("is-visible");
     renderContacts();
     setPhase("immediate");
     renderSpecials();
@@ -347,13 +374,65 @@
 
   function renderContacts() {
     const rows = manual?.content?.contacts || [];
-    $("contactGrid").innerHTML = rows.map(c => {
-      const clean = String(c.number || "").replace(/[^\d]/g, "");
-      return `<a class="contact" href="${clean ? `tel:${clean}` : "#"}">
-        <div><strong>${esc(c.name)}</strong><small>${esc(c.role || "")}</small></div>
-        <span class="phone">${esc(c.number || "")}</span>
-      </a>`;
+    const groups = [
+      {
+        key: "emergency",
+        title: "긴급전화",
+        sub: "신고·긴급출동",
+        icon: "☎",
+        match: (c) => /119|112|도로공사|1588-2504/.test(`${c.name || ""} ${c.role || ""} ${c.number || ""}`)
+      },
+      {
+        key: "corporation",
+        title: "공단 연락처",
+        sub: "사고보고·안전담당",
+        icon: "🏢",
+        match: (c) => /경기서부|차량 관리|차량관리|경영지원|ESG|안전 담당|안전담당|공단/.test(`${c.name || ""} ${c.role || ""}`)
+      },
+      {
+        key: "insurance",
+        title: "보험사·차량지원",
+        sub: "보험접수·긴급출동",
+        icon: "🚗",
+        match: (c) => /흥국|보험|SK렌터카|렌터카|긴급출동/.test(`${c.name || ""} ${c.role || ""}`)
+      }
+    ];
+
+    const assigned = new Set();
+    const html = groups.map(group => {
+      const groupRows = rows.filter((c, index) => {
+        if (assigned.has(index)) return false;
+        if (!group.match(c)) return false;
+        assigned.add(index);
+        return true;
+      });
+      if (!groupRows.length) return "";
+      const cards = groupRows.map(contactCardHtml).join("");
+      return `<section class="contact-group ${group.key}" aria-label="${esc(group.title)}">
+        <div class="contact-group-head">
+          <span class="contact-group-icon" aria-hidden="true">${group.icon}</span>
+          <strong class="contact-group-title">${esc(group.title)}</strong>
+          <span class="contact-group-sub">${esc(group.sub)}</span>
+        </div>
+        <div class="contact-grid">${cards}</div>
+      </section>`;
     }).join("");
+
+    const leftovers = rows.filter((_, index) => !assigned.has(index));
+    const extra = leftovers.length ? `<section class="contact-group corporation" aria-label="기타 연락처">
+      <div class="contact-group-head"><span class="contact-group-icon" aria-hidden="true">☎</span><strong class="contact-group-title">기타 연락처</strong></div>
+      <div class="contact-grid">${leftovers.map(contactCardHtml).join("")}</div>
+    </section>` : "";
+
+    $("contactGrid").innerHTML = html + extra;
+  }
+
+  function contactCardHtml(c) {
+    const clean = String(c.number || "").replace(/[^\d]/g, "");
+    return `<a class="contact" href="${clean ? `tel:${clean}` : "#"}">
+      <div><strong>${esc(c.name)}</strong><small>${esc(c.role || "")}</small></div>
+      <span class="phone">${esc(c.number || "")}</span>
+    </a>`;
   }
 
   function setPhase(next) {
@@ -415,6 +494,17 @@
     $("progressBar").style.width = `${((flowIndex + 1) / flowSteps.length) * 100}%`;
     $("prevBtn").disabled = flowIndex === 0;
     $("nextBtn").textContent = flowIndex === flowSteps.length - 1 ? "확인 완료" : "완료 · 다음 단계";
+  }
+
+  function openPdf() {
+    const code = localStorage.getItem(SAVED_CODE_KEY);
+    if (!code) {
+      toast("직원 인증 후 원본 매뉴얼을 볼 수 있습니다.");
+      return;
+    }
+
+    // employee-manual.html과 같은 GitHub 폴더에 업로드한 PDF를 직접 엽니다.
+    window.open("public-vehicle-accident-manual.pdf", "_blank", "noopener,noreferrer");
   }
 
   function bulletHtml(items) {
