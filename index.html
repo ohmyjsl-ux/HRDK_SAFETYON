@@ -98,6 +98,39 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
 .notice-badge-count[hidden] { display: none; }
 
 .search-section { margin-bottom: 20px; }
+.ticker-section { margin: 2px 0 22px; }
+.ticker-board { position: relative; overflow: hidden; border-radius: 18px; background: radial-gradient(120% 140% at 0% 0%, #12203f 0%, #0b1428 60%, #080f1f 100%); border: 1px solid #1e2f52; box-shadow: inset 0 0 26px rgba(0,0,0,.55), 0 12px 30px rgba(11,58,130,.16); }
+.ticker-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px 4px; }
+.ticker-title { display: inline-flex; align-items: center; gap: 8px; color: #d5e4ff; font-weight: 800; font-size: .92rem; letter-spacing: -.01em; }
+.ticker-live { width: 9px; height: 9px; border-radius: 50%; background: #39d98a; box-shadow: 0 0 8px #39d98a; animation: tickerLive 1.6s infinite; }
+@keyframes tickerLive { 0% { box-shadow: 0 0 0 0 rgba(57,217,138,.5); } 70% { box-shadow: 0 0 0 8px rgba(57,217,138,0); } 100% { box-shadow: 0 0 0 0 rgba(57,217,138,0); } }
+.ticker-add { border: 0; background: #1b47b8; color: #fff; font-weight: 800; font-size: .8rem; border-radius: 999px; padding: 7px 14px; cursor: pointer; letter-spacing: -.01em; }
+.ticker-add:hover { background: #1740a6; }
+.ticker-viewport { overflow: hidden; padding: 8px 0 13px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.ticker-track { display: inline-flex; align-items: center; white-space: nowrap; will-change: transform; }
+.ticker-track:hover { animation-play-state: paused; }
+@keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-item { display: inline-flex; align-items: baseline; gap: 9px; padding: 0 22px; color: #ffd873; font-weight: 700; font-size: 1.04rem; letter-spacing: .005em; text-shadow: 0 0 9px rgba(255,196,64,.4); }
+.ticker-item .who { color: #86b4ff; font-weight: 800; font-size: .82rem; text-shadow: none; }
+.ticker-sep { color: #33507f; font-size: .7rem; }
+.ticker-empty { color: #8ea2c9; padding: 2px 18px; font-size: .95rem; }
+.ticker-compose { margin-top: 12px; background: #fff; border: 1px solid #e0e7f1; border-radius: 16px; padding: 14px; box-shadow: 0 8px 22px rgba(11,58,130,.07); }
+.tc-row { display: flex; gap: 8px; }
+.tc-nick { flex: 0 0 104px; width: 104px; }
+.tc-msg { flex: 1 1 auto; min-width: 0; }
+.tc-nick, .tc-msg { height: 46px; border: 1.5px solid #cdd7e5; border-radius: 12px; padding: 0 13px; font-size: .98rem; font-weight: 500; color: var(--ink); background: #fff; outline: none; font-family: inherit; }
+.tc-nick:focus, .tc-msg:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(18,104,229,.12); }
+.tc-send { flex: 0 0 auto; height: 46px; padding: 0 18px; border: 0; border-radius: 12px; background: var(--blue); color: #fff; font-weight: 800; font-size: .96rem; cursor: pointer; font-family: inherit; }
+.tc-send:hover { background: #0a4fc0; }
+.tc-send:disabled { opacity: .55; cursor: default; }
+.tc-hint { margin: 9px 2px 0; color: var(--muted); font-size: .82rem; }
+.ticker-recent { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 7px; max-height: 168px; overflow-y: auto; }
+.ticker-recent li { display: flex; gap: 9px; align-items: baseline; padding: 9px 11px; background: #f5f8fc; border-radius: 11px; }
+.ticker-recent li b { flex: 0 0 auto; color: var(--blue); font-size: .82rem; font-weight: 800; }
+.ticker-recent li span { color: var(--ink); font-size: .92rem; font-weight: 500; word-break: break-all; }
+.tr-empty { justify-content: center; color: var(--muted); font-size: .88rem; }
+@media (max-width: 420px) { .tc-nick { flex-basis: 88px; width: 88px; } .ticker-item { font-size: .98rem; } }
+
 .search-box { height: 62px; display: flex; align-items: center; gap: 12px; border: 1.5px solid #c8d1df; border-radius: 999px; padding: 0 18px; background: #fff; transition: border-color .2s, box-shadow .2s; }
 .search-box:focus-within { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(18,104,229,.12); }
 .search-box svg { width: 25px; height: 25px; flex: 0 0 auto; }
@@ -1150,6 +1183,24 @@ window.SAFETY_CONFIG = {
         </button>
       </section>
 
+      <section class="ticker-section" aria-label="안전 한마디 게시판">
+        <div class="ticker-board">
+          <div class="ticker-head">
+            <span class="ticker-title"><span class="ticker-live" aria-hidden="true"></span>안전 한마디</span>
+            <button type="button" class="ticker-add" id="tickerAddBtn">＋ 남기기</button>
+          </div>
+          <div class="ticker-viewport"><div class="ticker-track" id="tickerTrack"></div></div>
+        </div>
+        <div class="ticker-compose" id="tickerCompose" hidden>
+          <div class="tc-row">
+            <input id="tickerNick" class="tc-nick" type="text" maxlength="12" placeholder="닉네임(선택)" autocomplete="off">
+            <input id="tickerMsg" class="tc-msg" type="text" maxlength="80" placeholder="안전 한마디를 남겨주세요" autocomplete="off">
+            <button type="button" id="tickerSubmit" class="tc-send">등록</button>
+          </div>
+          <p class="tc-hint" id="tickerHint">따뜻한 안전 한마디를 남겨주세요. 부적절한 글은 관리자가 삭제합니다.</p>
+          <ul class="ticker-recent" id="tickerRecent"></ul>
+        </div>
+      </section>
       <section class="quick-section" aria-labelledby="quickHeading">
         <div class="section-heading-row">
           <div>
@@ -1282,5 +1333,173 @@ window.SAFETY_CONFIG = {
   <noscript>
     <div class="noscript">이 페이지를 이용하려면 자바스크립트를 활성화해 주세요.</div>
   </noscript>
+  <script>
+(() => {
+  "use strict";
+  const settings = window.SAFETY_ON_SUPABASE || {};
+  const configured = !!(settings.url && settings.publishableKey && !String(settings.publishableKey).includes("여기에"));
+  let sb = null, messages = [], refetchTimer = null;
+
+  const DEFAULTS = [
+    "오늘도 안전이 최우선입니다",
+    "계단 이용 시 손잡이를 꼭 잡아요",
+    "무거운 물건은 다리 힘으로 천천히",
+    "이동 중 스마트폰은 잠깐 멈춤",
+    "비상구 위치, 지금 한 번 확인!",
+    "젖은 바닥은 미끄럼에 주의하세요",
+    "소화기 위치를 미리 알아두세요"
+  ];
+  const BADWORDS = ["시발","씨발","개새","병신","좆","존나","꺼져","닥쳐","fuck","shit","bitch"];
+
+  const el = {};
+  document.addEventListener("DOMContentLoaded", init);
+
+  function init() {
+    el.track = document.getElementById("tickerTrack");
+    if (!el.track) return;
+    el.addBtn = document.getElementById("tickerAddBtn");
+    el.compose = document.getElementById("tickerCompose");
+    el.nick = document.getElementById("tickerNick");
+    el.msg = document.getElementById("tickerMsg");
+    el.submit = document.getElementById("tickerSubmit");
+    el.recent = document.getElementById("tickerRecent");
+    el.hint = document.getElementById("tickerHint");
+
+    if (el.addBtn) el.addBtn.addEventListener("click", toggleCompose);
+    if (el.submit) el.submit.addEventListener("click", submit);
+    if (el.msg) el.msg.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
+
+    renderTicker();
+    renderRecent();
+
+    if (configured && window.supabase && window.supabase.createClient) {
+      try {
+        sb = window.supabase.createClient(settings.url, settings.publishableKey, { auth: { persistSession: false, autoRefreshToken: false } });
+        fetchMessages();
+        subscribe();
+        setInterval(fetchMessages, 60000);
+      } catch (e) { console.warn("안전 한마디 초기화 실패", e); }
+    } else if (!configured) {
+      if (el.hint) el.hint.textContent = "관리자 설정 완료 후 등록할 수 있어요.";
+      if (el.msg) el.msg.disabled = true;
+      if (el.nick) el.nick.disabled = true;
+      if (el.submit) el.submit.disabled = true;
+    }
+  }
+
+  async function fetchMessages() {
+    if (!sb) return;
+    try {
+      const { data, error } = await sb.from("safety_messages")
+        .select("id,nickname,message,created_at")
+        .eq("is_hidden", false)
+        .order("created_at", { ascending: false })
+        .limit(60);
+      if (error) throw error;
+      messages = data || [];
+      renderTicker();
+      renderRecent();
+    } catch (e) { console.warn("안전 한마디 불러오기 실패", e); }
+  }
+
+  function displayItems() {
+    const real = messages.map((m) => ({ who: m.nickname || "익명", text: m.message }));
+    if (real.length >= 6) return real;
+    const seeds = DEFAULTS.map((t) => ({ who: "안전지기", text: t }));
+    return real.concat(seeds).slice(0, Math.max(6, real.length));
+  }
+
+  function renderTicker() {
+    const items = displayItems();
+    if (!items.length) {
+      el.track.innerHTML = '<span class="ticker-empty">첫 번째 안전 한마디를 남겨보세요!</span>';
+      el.track.style.animation = "none";
+      return;
+    }
+    const one = items.map((it) => '<span class="ticker-item"><span class="who">' + esc(it.who) + '</span>' + esc(it.text) + '</span><span class="ticker-sep" aria-hidden="true">\u25C6</span>').join("");
+    el.track.innerHTML = one + one;
+    el.track.style.animation = "none";
+    requestAnimationFrame(() => {
+      const w = el.track.scrollWidth / 2;
+      const dur = Math.max(14, Math.round(w / 60));
+      el.track.style.animation = "tickerScroll " + dur + "s linear infinite";
+    });
+  }
+
+  function renderRecent() {
+    if (!el.recent) return;
+    if (!messages.length) {
+      el.recent.innerHTML = '<li class="tr-empty">아직 등록된 한마디가 없어요. 첫 한마디를 남겨주세요!</li>';
+      return;
+    }
+    el.recent.innerHTML = messages.slice(0, 20).map((m) => '<li><b>' + esc(m.nickname || "익명") + '</b><span>' + esc(m.message) + '</span></li>').join("");
+  }
+
+  function toggleCompose() {
+    if (!el.compose) return;
+    const willOpen = el.compose.hasAttribute("hidden");
+    if (willOpen) {
+      el.compose.removeAttribute("hidden");
+      if (el.msg && !el.msg.disabled) el.msg.focus();
+    } else {
+      el.compose.setAttribute("hidden", "");
+    }
+  }
+
+  async function submit() {
+    const message = (el.msg.value || "").trim();
+    const nickname = (el.nick.value || "").trim().slice(0, 12);
+    if (message.length < 2) { toast("한마디를 2자 이상 입력해 주세요."); return; }
+    if (message.length > 80) { toast("80자 이내로 입력해 주세요."); return; }
+    const low = (message + " " + nickname).toLowerCase();
+    if (BADWORDS.some((w) => low.includes(w))) { toast("부적절한 표현이 포함되어 있어요."); return; }
+    if (!sb) { toast("아직 등록할 수 없어요. 관리자 설정이 필요합니다."); return; }
+    try {
+      const last = Number(localStorage.getItem("anjeon_last_post") || 0);
+      const lastMsg = localStorage.getItem("anjeon_last_msg") || "";
+      if (Date.now() - last < 15000) { toast("잠시 후 다시 등록해 주세요."); return; }
+      if (lastMsg === message) { toast("방금 등록한 내용이에요."); return; }
+    } catch (e) {}
+    el.submit.disabled = true;
+    try {
+      const { error } = await sb.from("safety_messages").insert({ nickname: nickname || null, message: message });
+      if (error) throw error;
+      try { localStorage.setItem("anjeon_last_post", String(Date.now())); localStorage.setItem("anjeon_last_msg", message); } catch (e) {}
+      el.msg.value = "";
+      toast("안전 한마디가 등록되었어요. 고맙습니다!");
+      if (el.compose) el.compose.setAttribute("hidden", "");
+      fetchMessages();
+    } catch (e) {
+      console.error("안전 한마디 등록 실패", e);
+      toast("등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      el.submit.disabled = false;
+    }
+  }
+
+  function subscribe() {
+    try {
+      sb.channel("safety-messages-public")
+        .on("postgres_changes", { event: "*", schema: "public", table: "safety_messages" }, () => {
+          clearTimeout(refetchTimer);
+          refetchTimer = setTimeout(fetchMessages, 400);
+        })
+        .subscribe();
+    } catch (e) { console.warn("안전 한마디 실시간 구독 실패", e); }
+  }
+
+  function toast(m) {
+    const t = document.getElementById("toast");
+    if (!t) return;
+    t.textContent = m;
+    t.classList.add("is-visible");
+    setTimeout(() => t.classList.remove("is-visible"), 2600);
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+})();
+  </script>
 </body>
 </html>
