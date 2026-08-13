@@ -42,14 +42,15 @@
     input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,104,229,.10)}
     .primary{width:100%;min-height:52px;border:0;border-radius:13px;background:var(--navy);color:#fff;font-size:1rem;font-weight:700;letter-spacing:-.025em;cursor:pointer;margin-top:17px}
     .auth-msg{min-height:22px;text-align:center;margin:12px 0 0;color:var(--red);font-size:.86rem;font-weight:600}
-    .pin-label{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .pin-hint{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:#f4f7fb;color:#536174;font-size:.82rem;font-weight:600;line-height:1.5;text-align:center;word-break:keep-all}
-    .pin-hint strong{color:var(--navy);font-weight:800}
-    .pin-input{text-align:center;font-size:1.28rem!important;font-weight:800!important;letter-spacing:.34em!important;padding-left:calc(14px + .34em)!important}
-    .auth-note{margin:12px 0 0;color:#697386;font-size:.8rem;line-height:1.55;text-align:center;word-break:keep-all}
-    .auth-emergency{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-    .auth-emergency a{min-height:44px;border-radius:12px;border:1px solid #d7e2f1;background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--navy);font-size:.9rem;font-weight:700;text-decoration:none}
-    .auth-emergency a:first-child{border-color:#ffc6c1;color:#b42318;background:#fff7f6}
+
+    .pin-input{ text-align:center; font-size:1.45rem; font-weight:800; letter-spacing:.32em; padding-left:calc(14px + .32em); }
+    .auth-hint{margin:9px 0 0;text-align:center;color:#667085;font-size:.82rem;font-weight:600;line-height:1.5;word-break:keep-all}
+    .auth-hint strong{color:var(--navy);font-weight:800}
+    .auth-emergency{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid #edf1f5}
+    .auth-emergency a{min-height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.91rem;font-weight:700;letter-spacing:-.02em}
+    .call-119{background:#fff2f0;color:#b42318;border:1px solid #ffc9c3}
+    .call-112{background:#eef5ff;color:#0b4e9e;border:1px solid #c9dcfb}
+    .auth-safety-note{margin:10px 0 0;text-align:center;color:#7a4850;font-size:.76rem;font-weight:500;line-height:1.5;word-break:keep-all}
     .manual[hidden],.auth-card[hidden]{display:none!important}
     .manual-head{border-radius:24px;background:linear-gradient(145deg,#0d6ce6,#074baf);color:#fff;padding:24px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
     .manual-head::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;bottom:-100px;background:rgba(255,255,255,.09)}
@@ -139,17 +140,17 @@
       <h1>직원 인증</h1>
       <p class="auth-lead">비상상황에서 빠르게 확인할 수 있도록<br><strong>3자리 직원 인증번호</strong>만 입력해 주세요.</p>
       <form id="loginForm">
-        <label class="pin-label" for="pin">직원 인증번호 <span style="font-size:.76rem;color:#7b8798;font-weight:600">숫자 3자리</span></label>
-        <input id="pin" class="pin-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" required placeholder="•••" aria-describedby="pinHint">
-        <p id="pinHint" class="pin-hint">힌트 : <strong>경기서부지사 내선번호 가운데 3자리 (032-XXX)</strong></p>
-        <button class="primary" type="submit">매뉴얼 바로 열기</button>
+        <label for="accessCode">직원 인증번호</label>
+        <input id="accessCode" class="pin-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" required placeholder="•••" aria-describedby="accessHint">
+        <p id="accessHint" class="auth-hint">힌트 : <strong>경기서부지사 내선번호 가운데 3자리 (032-XXX)</strong></p>
+        <button id="authButton" class="primary" type="submit">매뉴얼 바로 열기</button>
       </form>
       <p id="authMsg" class="auth-msg" role="alert"></p>
-      <p class="auth-note">최초 1회 인증 후 같은 휴대폰·브라우저에서는 인증 상태가 유지됩니다.</p>
-      <div class="auth-emergency" aria-label="긴급 신고">
-        <a href="tel:119">📞 119 신고</a>
-        <a href="tel:112">📞 112 신고</a>
+      <div class="auth-emergency" aria-label="긴급 신고 전화">
+        <a class="call-119" href="tel:119">☎ 119 신고</a>
+        <a class="call-112" href="tel:112">☎ 112 신고</a>
       </div>
+      <p class="auth-safety-note">인명사고·화재 등 긴급상황은 인증보다 119·112 신고와 현장 안전 확보를 우선하세요.</p>
     </section>
 
     <section id="manual" class="manual" hidden>
@@ -159,7 +160,7 @@
         <p id="manualSubtitle">사고 발생 시 현장에서 즉시 확인하는 단계별 대응 절차</p>
         <div class="head-actions">
           <button id="startFlow" class="start-btn" type="button">🚨 예, 지금 사고가 났습니다</button>
-          <button id="logoutBtn" class="logout-btn" type="button">로그아웃</button>
+          <button id="logoutBtn" class="logout-btn" type="button">인증 해제</button>
         </div>
       </header>
 
@@ -187,8 +188,7 @@
         <div id="specialGrid" class="special-grid"></div>
       </section>
 
-      <div class="bottom-actions">
-        <button id="pdfBtn" class="outline-btn" type="button">📄 원본 매뉴얼 PDF 보기</button>
+      <div class="bottom-actions" style="grid-template-columns:1fr">
         <button id="allStepsBtn" class="outline-btn" type="button">☑ 전체 절차 한눈에 보기</button>
       </div>
     </section>
@@ -218,7 +218,11 @@
 <script>
 (() => {
   "use strict";
+
   const settings = window.SAFETY_ON_SUPABASE || {};
+  const MANUAL_SLUG = "public-vehicle-accident";
+  const SAVED_CODE_KEY = "safetyon_employee_access_code";
+
   let client = null;
   let manual = null;
   let phase = "immediate";
@@ -234,22 +238,26 @@
       showFatal("Supabase 연결 설정을 확인해 주세요. 기존 supabase-config.js 파일이 필요합니다.");
       return;
     }
+
     client = window.supabase.createClient(settings.url, settings.publishableKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        storageKey: "safetyon-employee-auth-v1"
-      }
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
     });
 
     bind();
-    const { data } = await client.auth.getSession();
-    if (data?.session) await enterManual();
+
+    const savedCode = localStorage.getItem(SAVED_CODE_KEY);
+    if (savedCode) {
+      const ok = await verifyAndLoad(savedCode, { silent: true, remember: true });
+      if (!ok) localStorage.removeItem(SAVED_CODE_KEY);
+    }
   }
 
   function bind() {
     $("loginForm").addEventListener("submit", login);
+    $("accessCode").addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+      $("authMsg").textContent = "";
+    });
     $("logoutBtn").addEventListener("click", logout);
     $("tabImmediate").addEventListener("click", () => setPhase("immediate"));
     $("tabAfter").addEventListener("click", () => setPhase("after"));
@@ -259,64 +267,77 @@
     $("flowBackdrop").addEventListener("click", (e) => { if (e.target === $("flowBackdrop")) closeFlow(); });
     $("prevBtn").addEventListener("click", () => moveFlow(-1));
     $("nextBtn").addEventListener("click", () => moveFlow(1));
-    $("pdfBtn").addEventListener("click", openPdf);
-    $("pin").addEventListener("input", (e) => {
-      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
-    });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("flowBackdrop").hidden) closeFlow(); });
   }
 
   async function login(e) {
     e.preventDefault();
+    const code = $("accessCode").value.trim();
     $("authMsg").textContent = "";
-    const pin = $("pin").value.replace(/\D/g, "").slice(0, 3);
-    if (pin.length !== 3) {
-      $("authMsg").textContent = "직원 인증번호 3자리를 입력해 주세요.";
-      $("pin").focus();
+
+    if (!/^\d{3}$/.test(code)) {
+      $("authMsg").textContent = "3자리 숫자를 입력해 주세요.";
+      $("accessCode").focus();
       return;
     }
 
-    const { error } = await client.auth.signInWithPassword({
-      email: "safetyon.employee@hrdk.or.kr",
-      password: pin + pin
-    });
-    if (error) {
-      $("authMsg").textContent = "직원 인증번호를 확인해 주세요.";
-      $("pin").value = "";
-      $("pin").focus();
-      return;
+    const button = $("authButton");
+    button.disabled = true;
+    button.textContent = "확인 중...";
+
+    try {
+      const ok = await verifyAndLoad(code, { silent: false, remember: true });
+      if (!ok) {
+        $("authMsg").textContent = "직원 인증번호를 확인해 주세요.";
+        $("accessCode").select();
+      }
+    } finally {
+      button.disabled = false;
+      button.textContent = "매뉴얼 바로 열기";
     }
-    await enterManual();
-    setTimeout(() => $("startFlow")?.focus(), 50);
   }
 
-  async function logout() {
-    await client.auth.signOut();
+  async function verifyAndLoad(code, { silent = false, remember = false } = {}) {
+    try {
+      const { data, error } = await client.rpc("get_employee_manual", {
+        p_slug: MANUAL_SLUG,
+        p_code: code
+      });
+
+      if (error) {
+        console.error("직원 매뉴얼 인증/조회 실패", error);
+        if (!silent) $("authMsg").textContent = "인증 서버 연결을 확인해 주세요.";
+        return false;
+      }
+
+      const row = Array.isArray(data) ? data[0] : data;
+      if (!row || !row.slug) return false;
+
+      manual = row;
+      if (remember) localStorage.setItem(SAVED_CODE_KEY, code);
+      enterManual();
+      return true;
+    } catch (error) {
+      console.error(error);
+      if (!silent) $("authMsg").textContent = "잠시 후 다시 시도해 주세요.";
+      return false;
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem(SAVED_CODE_KEY);
     manual = null;
     $("manual").hidden = true;
     $("authCard").hidden = false;
-    $("pin").value = "";
-    $("pin").focus();
+    $("accessCode").value = "";
+    $("authMsg").textContent = "";
+    $("accessCode").focus();
+    toast("직원 인증을 해제했습니다.");
   }
 
-  async function enterManual() {
-    const { data: sessionData } = await client.auth.getSession();
-    if (!sessionData?.session) return;
-    const { data, error } = await client.from("employee_manuals")
-      .select("slug,title,subtitle,content,updated_at")
-      .eq("slug","public-vehicle-accident")
-      .maybeSingle();
-
-    if (error || !data) {
-      console.error(error);
-      $("authCard").hidden = true;
-      $("manual").hidden = false;
-      $("manual").innerHTML = '<div class="error-card"><strong>매뉴얼을 불러오지 못했습니다.</strong><br>Supabase에서 직원 매뉴얼 설정 SQL을 먼저 실행했는지 확인해 주세요.</div>';
-      return;
-    }
-    manual = data;
-    $("manualTitle").textContent = data.title || "공용차 교통사고 대응";
-    $("manualSubtitle").textContent = data.subtitle || "";
+  function enterManual() {
+    $("manualTitle").textContent = manual.title || "공용차 교통사고 대응";
+    $("manualSubtitle").textContent = manual.subtitle || "";
     $("authCard").hidden = true;
     $("manual").hidden = false;
     renderContacts();
@@ -327,7 +348,7 @@
   function renderContacts() {
     const rows = manual?.content?.contacts || [];
     $("contactGrid").innerHTML = rows.map(c => {
-      const clean = String(c.number || "").replace(/[^\d]/g,"");
+      const clean = String(c.number || "").replace(/[^\d]/g, "");
       return `<a class="contact" href="${clean ? `tel:${clean}` : "#"}">
         <div><strong>${esc(c.name)}</strong><small>${esc(c.role || "")}</small></div>
         <span class="phone">${esc(c.number || "")}</span>
@@ -340,10 +361,10 @@
     $("tabImmediate").classList.toggle("is-active", next === "immediate");
     $("tabAfter").classList.toggle("is-active", next === "after");
     const rows = manual?.content?.[next] || [];
-    $("steps").innerHTML = rows.map((row,i) => `
+    $("steps").innerHTML = rows.map((row, i) => `
       <article class="step">
         <div class="step-top">
-          <span class="step-no">${i+1}</span>
+          <span class="step-no">${i + 1}</span>
           <div><h3>${esc(row.title)}</h3>${bulletHtml(row.bullets)}</div>
         </div>
       </article>`).join("");
@@ -354,30 +375,37 @@
     $("specialGrid").innerHTML = rows.map(row => `
       <details>
         <summary>${esc(row.title)} <span>＋</span></summary>
-        <div class="detail-body">${(row.paragraphs||[]).map(p => `<p>${esc(p)}</p>`).join("")}</div>
+        <div class="detail-body">${(row.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>
       </details>`).join("");
   }
 
   function openFlow() {
     flowSteps = [
-      ...(manual?.content?.immediate || []).map(x => ({...x, phase:"사고 직후"})),
-      ...(manual?.content?.after || []).map(x => ({...x, phase:"사고 이후"}))
+      ...(manual?.content?.immediate || []).map(x => ({ ...x, phase: "사고 직후" })),
+      ...(manual?.content?.after || []).map(x => ({ ...x, phase: "사고 이후" }))
     ];
     flowIndex = 0;
     renderFlow();
     $("flowBackdrop").hidden = false;
     document.body.style.overflow = "hidden";
   }
+
   function closeFlow() {
     $("flowBackdrop").hidden = true;
     document.body.style.overflow = "";
   }
+
   function moveFlow(delta) {
     if (!flowSteps.length) return;
-    if (delta > 0 && flowIndex === flowSteps.length - 1) { closeFlow(); toast("전체 사고 대응 절차를 확인했습니다."); return; }
+    if (delta > 0 && flowIndex === flowSteps.length - 1) {
+      closeFlow();
+      toast("전체 사고 대응 절차를 확인했습니다.");
+      return;
+    }
     flowIndex = Math.max(0, Math.min(flowSteps.length - 1, flowIndex + delta));
     renderFlow();
   }
+
   function renderFlow() {
     const row = flowSteps[flowIndex];
     if (!row) return;
@@ -389,27 +417,22 @@
     $("nextBtn").textContent = flowIndex === flowSteps.length - 1 ? "확인 완료" : "완료 · 다음 단계";
   }
 
-  async function openPdf() {
-    const pdf = manual?.content?.pdf;
-    if (!pdf?.bucket || !pdf?.path) { toast("원본 PDF 연결정보가 없습니다."); return; }
-    const { data, error } = await client.storage.from(pdf.bucket).createSignedUrl(pdf.path, 60);
-    if (error || !data?.signedUrl) {
-      console.error(error); toast("원본 PDF가 아직 업로드되지 않았습니다."); return;
-    }
-    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
-  }
-
   function bulletHtml(items) {
     if (!Array.isArray(items) || !items.length) return "";
     return `<ul>${items.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
   }
+
   function esc(v) {
-    return String(v ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+    return String(v ?? "").replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
   }
+
   function toast(msg) {
-    $("toast").textContent = msg; $("toast").classList.add("show"); clearTimeout(toastTimer);
+    $("toast").textContent = msg;
+    $("toast").classList.add("show");
+    clearTimeout(toastTimer);
     toastTimer = setTimeout(() => $("toast").classList.remove("show"), 2600);
   }
+
   function showFatal(msg) {
     $("authCard").innerHTML = `<div class="error-card">${esc(msg)}</div>`;
   }
