@@ -124,6 +124,49 @@
     .flow-foot button{min-height:56px;border-radius:14px;font-size:1.02rem;font-weight:700;letter-spacing:-.025em;cursor:pointer}
     .prev{border:1px solid #cbd5e1;background:#fff;color:#475467}
     .next{border:0;background:var(--green);color:#fff}
+
+    /* 원본 PDF 인페이지 뷰어 */
+    .pdf-backdrop{
+      position:fixed;z-index:1150;inset:0;background:rgba(8,18,34,.76);
+      display:grid;place-items:center;padding:14px;
+    }
+    .pdf-backdrop[hidden]{display:none}
+    .pdf-viewer{
+      width:min(100%,900px);height:min(94dvh,960px);background:#fff;border-radius:24px;
+      overflow:hidden;display:flex;flex-direction:column;box-shadow:0 28px 90px rgba(0,0,0,.42);
+    }
+    .pdf-viewer-head{
+      min-height:62px;padding:10px 12px 10px 18px;border-bottom:1px solid #e6ebf1;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;
+    }
+    .pdf-viewer-title{min-width:0}
+    .pdf-viewer-title strong{
+      display:block;color:var(--navy);font-size:1.05rem;font-weight:800;
+      letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .pdf-viewer-title span{display:block;margin-top:2px;color:var(--muted);font-size:.76rem;font-weight:500}
+    .pdf-viewer-actions{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+    .pdf-external{
+      min-height:38px;padding:0 11px;border:1px solid #c7d7ee;border-radius:10px;
+      background:#f6f9fe;color:var(--navy);font-size:.78rem;font-weight:700;text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center;
+    }
+    .pdf-close{
+      width:40px;height:40px;border:0;border-radius:11px;background:#eef2f7;
+      color:#172033;font-size:1.45rem;line-height:1;cursor:pointer;
+    }
+    .pdf-frame{
+      width:100%;height:100%;min-height:0;flex:1;border:0;background:#eef2f7;
+    }
+    @media(max-width:620px){
+      .pdf-backdrop{padding:0}
+      .pdf-viewer{width:100%;height:100dvh;border-radius:0}
+      .pdf-viewer-head{min-height:58px;padding:8px 9px 8px 13px}
+      .pdf-viewer-title strong{font-size:.98rem}
+      .pdf-viewer-title span{font-size:.7rem}
+      .pdf-external{display:none}
+    }
+
     .toast{position:fixed;z-index:1400;left:50%;bottom:20px;transform:translate(-50%,20px);width:min(calc(100% - 36px),520px);padding:13px 16px;background:#172033;color:#fff;border-radius:13px;text-align:center;font-size:.9rem;font-weight:500;opacity:0;pointer-events:none;transition:.2s}
     .toast.show{opacity:1;transform:translate(-50%,0)}
     .error-card{padding:20px;border:1px solid #ffd0cb;background:#fff5f3;border-radius:18px;color:#8a2d25;font-size:var(--fs-body);font-weight:500;line-height:1.65}
@@ -237,6 +280,28 @@
     </section>
   </div>
 
+
+  <div id="pdfBackdrop" class="pdf-backdrop" hidden>
+    <section class="pdf-viewer" role="dialog" aria-modal="true" aria-labelledby="pdfViewerTitle">
+      <div class="pdf-viewer-head">
+        <div class="pdf-viewer-title">
+          <strong id="pdfViewerTitle">공용차 사고대응 원본 매뉴얼</strong>
+          <span>PDF 전체 매뉴얼</span>
+        </div>
+        <div class="pdf-viewer-actions">
+          <a class="pdf-external" href="public-vehicle-accident-manual.pdf" target="_blank" rel="noopener noreferrer">새 창에서 보기</a>
+          <button id="pdfClose" class="pdf-close" type="button" aria-label="PDF 닫기">×</button>
+        </div>
+      </div>
+      <iframe
+        id="pdfFrame"
+        class="pdf-frame"
+        title="공용차 사고대응 원본 매뉴얼 PDF"
+        loading="lazy"
+      ></iframe>
+    </section>
+  </div>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -288,11 +353,17 @@
     $("startFlow").addEventListener("click", openFlow);
     $("allStepsBtn").addEventListener("click", openFlow);
     $("pdfBtn").addEventListener("click", openPdf);
+    $("pdfClose").addEventListener("click", closePdf);
+    $("pdfBackdrop").addEventListener("click", (e) => { if (e.target === $("pdfBackdrop")) closePdf(); });
     $("flowClose").addEventListener("click", closeFlow);
     $("flowBackdrop").addEventListener("click", (e) => { if (e.target === $("flowBackdrop")) closeFlow(); });
     $("prevBtn").addEventListener("click", () => moveFlow(-1));
     $("nextBtn").addEventListener("click", () => moveFlow(1));
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("flowBackdrop").hidden) closeFlow(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      if (!$("pdfBackdrop").hidden) { closePdf(); return; }
+      if (!$("flowBackdrop").hidden) closeFlow();
+    });
   }
 
   async function login(e) {
@@ -503,8 +574,16 @@
       return;
     }
 
-    // employee-manual.html과 같은 GitHub 폴더에 업로드한 PDF를 직접 엽니다.
-    window.open("public-vehicle-accident-manual.pdf", "_blank", "noopener,noreferrer");
+    // GitHub에 함께 올린 PDF를 안전ON 화면 안에서 바로 표시합니다.
+    $("pdfFrame").src = "public-vehicle-accident-manual.pdf#view=FitH";
+    $("pdfBackdrop").hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closePdf() {
+    $("pdfBackdrop").hidden = true;
+    $("pdfFrame").src = "";
+    document.body.style.overflow = "";
   }
 
   function bulletHtml(items) {
