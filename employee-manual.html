@@ -42,6 +42,14 @@
     input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,104,229,.10)}
     .primary{width:100%;min-height:52px;border:0;border-radius:13px;background:var(--navy);color:#fff;font-size:1rem;font-weight:700;letter-spacing:-.025em;cursor:pointer;margin-top:17px}
     .auth-msg{min-height:22px;text-align:center;margin:12px 0 0;color:var(--red);font-size:.86rem;font-weight:600}
+    .pin-label{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .pin-hint{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:#f4f7fb;color:#536174;font-size:.82rem;font-weight:600;line-height:1.5;text-align:center;word-break:keep-all}
+    .pin-hint strong{color:var(--navy);font-weight:800}
+    .pin-input{text-align:center;font-size:1.28rem!important;font-weight:800!important;letter-spacing:.34em!important;padding-left:calc(14px + .34em)!important}
+    .auth-note{margin:12px 0 0;color:#697386;font-size:.8rem;line-height:1.55;text-align:center;word-break:keep-all}
+    .auth-emergency{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+    .auth-emergency a{min-height:44px;border-radius:12px;border:1px solid #d7e2f1;background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--navy);font-size:.9rem;font-weight:700;text-decoration:none}
+    .auth-emergency a:first-child{border-color:#ffc6c1;color:#b42318;background:#fff7f6}
     .manual[hidden],.auth-card[hidden]{display:none!important}
     .manual-head{border-radius:24px;background:linear-gradient(145deg,#0d6ce6,#074baf);color:#fff;padding:24px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
     .manual-head::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;bottom:-100px;background:rgba(255,255,255,.09)}
@@ -129,15 +137,19 @@
     <section id="authCard" class="auth-card card">
       <div class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
       <h1>직원 인증</h1>
-      <p class="auth-lead">직원 비상대응 매뉴얼은 내부 업무정보를 포함하고 있어<br>직원 계정으로 로그인한 뒤 이용할 수 있습니다.</p>
+      <p class="auth-lead">비상상황에서 빠르게 확인할 수 있도록<br><strong>3자리 직원 인증번호</strong>만 입력해 주세요.</p>
       <form id="loginForm">
-        <label for="email">이메일</label>
-        <input id="email" type="email" autocomplete="username" required placeholder="직원 계정 이메일">
-        <label for="password">비밀번호</label>
-        <input id="password" type="password" autocomplete="current-password" required placeholder="비밀번호">
-        <button class="primary" type="submit">직원 로그인</button>
+        <label class="pin-label" for="pin">직원 인증번호 <span style="font-size:.76rem;color:#7b8798;font-weight:600">숫자 3자리</span></label>
+        <input id="pin" class="pin-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" required placeholder="•••" aria-describedby="pinHint">
+        <p id="pinHint" class="pin-hint">힌트 : <strong>경기서부지사 내선번호 가운데 3자리 (032-XXX)</strong></p>
+        <button class="primary" type="submit">매뉴얼 바로 열기</button>
       </form>
       <p id="authMsg" class="auth-msg" role="alert"></p>
+      <p class="auth-note">최초 1회 인증 후 같은 휴대폰·브라우저에서는 인증 상태가 유지됩니다.</p>
+      <div class="auth-emergency" aria-label="긴급 신고">
+        <a href="tel:119">📞 119 신고</a>
+        <a href="tel:112">📞 112 신고</a>
+      </div>
     </section>
 
     <section id="manual" class="manual" hidden>
@@ -223,7 +235,12 @@
       return;
     }
     client = window.supabase.createClient(settings.url, settings.publishableKey, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storageKey: "safetyon-employee-auth-v1"
+      }
     });
 
     bind();
@@ -243,20 +260,34 @@
     $("prevBtn").addEventListener("click", () => moveFlow(-1));
     $("nextBtn").addEventListener("click", () => moveFlow(1));
     $("pdfBtn").addEventListener("click", openPdf);
+    $("pin").addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+    });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("flowBackdrop").hidden) closeFlow(); });
   }
 
   async function login(e) {
     e.preventDefault();
     $("authMsg").textContent = "";
-    const email = $("email").value.trim();
-    const password = $("password").value;
-    const { error } = await client.auth.signInWithPassword({ email, password });
+    const pin = $("pin").value.replace(/\D/g, "").slice(0, 3);
+    if (pin.length !== 3) {
+      $("authMsg").textContent = "직원 인증번호 3자리를 입력해 주세요.";
+      $("pin").focus();
+      return;
+    }
+
+    const { error } = await client.auth.signInWithPassword({
+      email: "safetyon.employee@hrdk.or.kr",
+      password: pin + pin
+    });
     if (error) {
-      $("authMsg").textContent = "로그인 정보를 확인해 주세요.";
+      $("authMsg").textContent = "직원 인증번호를 확인해 주세요.";
+      $("pin").value = "";
+      $("pin").focus();
       return;
     }
     await enterManual();
+    setTimeout(() => $("startFlow")?.focus(), 50);
   }
 
   async function logout() {
@@ -264,8 +295,8 @@
     manual = null;
     $("manual").hidden = true;
     $("authCard").hidden = false;
-    $("password").value = "";
-    $("email").focus();
+    $("pin").value = "";
+    $("pin").focus();
   }
 
   async function enterManual() {
