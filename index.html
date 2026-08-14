@@ -505,7 +505,7 @@ window.SAFETY_CONFIG = {
   ],
 
   links: {
-    report: "https://naver.me/5vJ4ANNe",
+    report: "https://naver.me/GB35qfQu",
     buildingGuide: "#internal",
     emergency: "#internal",
     emergencyManual: "#internal",
@@ -1012,6 +1012,7 @@ window.SAFETY_CONFIG = {
   const settings = window.SAFETY_ON_SUPABASE || {};
   let client = null;
   let refreshTimer = null;
+  let slotTimer = null;
 
   document.addEventListener("DOMContentLoaded", () => {
     if (!settings.url || !settings.publishableKey || settings.publishableKey.includes("여기에")) {
@@ -1025,9 +1026,20 @@ window.SAFETY_CONFIG = {
     loadRemoteSafetyData(false);
     subscribeRealtime();
     refreshTimer = setInterval(() => loadRemoteSafetyData(false), settings.refreshIntervalMs || 60000);
+    scheduleSlotRefresh();
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) loadRemoteSafetyData(false); });
     const refresh = document.getElementById("refreshButton");
     if (refresh) refresh.addEventListener("click", () => loadRemoteSafetyData(true));
   });
+
+  // 다음 정기 점검 시각(9/12/15/18/21/24/3/6시)에 맞춰 자동 새로고침
+  function scheduleSlotRefresh() {
+    clearTimeout(slotTimer);
+    slotTimer = setTimeout(() => {
+      loadRemoteSafetyData(false);
+      scheduleSlotRefresh();
+    }, msUntilNextSlot() + 2000);
+  }
 
   async function loadRemoteSafetyData(showMessage) {
     try {
@@ -1050,7 +1062,7 @@ window.SAFETY_CONFIG = {
     if (!row) return;
     const status = {
       level: row.level || "정상",
-      updatedAt: formatDateTime(row.updated_at),
+      updatedAt: displayUpdatedAt(row.updated_at),
       title: row.title || `오늘은 ${row.level || "정상"} 단계`,
       summary: row.summary || "현재 안내사항이 없습니다.",
       reason: row.reason || "별도 사유 없음",
@@ -1101,6 +1113,37 @@ window.SAFETY_CONFIG = {
 
   function kstDateString() {
     return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  }
+
+  // 3시간 간격 정기 점검 슬롯: 00,03,06,09,12,15,18,21시(KST)
+  const SLOT_HOURS = [0, 3, 6, 9, 12, 15, 18, 21];
+
+  // 지금 기준 "가장 최근에 지난 정기 점검 시각"(KST)
+  function lastSlotDate(now) {
+    const base = now || new Date();
+    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hour12: false }).formatToParts(base);
+    const get = (t) => Number(parts.find((x) => x.type === t).value);
+    let h = get("hour") % 24;
+    let slot = SLOT_HOURS.filter((x) => x <= h).pop();
+    let y = get("year"), m = get("month"), d = get("day");
+    if (slot === undefined) { slot = 21; const prev = new Date(Date.UTC(y, m - 1, d) - 86400000); y = prev.getUTCFullYear(); m = prev.getUTCMonth() + 1; d = prev.getUTCDate(); }
+    // KST(UTC+9) 기준 시각을 UTC 인스턴트로 환산
+    return new Date(Date.UTC(y, m - 1, d, slot - 9, 0, 0));
+  }
+
+  // 다음 정기 점검까지 남은 ms
+  function msUntilNextSlot() {
+    const next = new Date(lastSlotDate().getTime() + 3 * 3600 * 1000);
+    return Math.max(1000, next.getTime() - Date.now());
+  }
+
+  // 수정시각과 최근 점검시각 중 더 나중 것을 표시
+  //  → 관리자가 내용을 고치면 그 시각이, 변경이 없으면 정기 점검시각이 표시됨
+  function displayUpdatedAt(value) {
+    const slot = lastSlotDate();
+    const edited = value ? new Date(value) : null;
+    const useEdited = edited && !Number.isNaN(edited.getTime()) && edited.getTime() > slot.getTime();
+    return formatDateTime(useEdited ? edited : slot);
   }
 
   function formatDateTime(value) {
