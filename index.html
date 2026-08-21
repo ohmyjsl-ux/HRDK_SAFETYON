@@ -98,6 +98,14 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
 .notice-badge-count { position: absolute; top: 5px; right: 5px; min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box; border-radius: 999px; background: #e7473c; color: #fff; font-size: .68rem; font-weight: 800; line-height: 16px; text-align: center; pointer-events: none; }
 .notice-badge-count[hidden] { display: none; }
 
+/* 방문자 수 · 최상단 얇은 표시 */
+.visit-bar { display: flex; justify-content: flex-end; align-items: center; gap: 7px; padding: 2px 2px 0; margin: 0 0 -2px; font-size: .72rem; font-weight: 600; letter-spacing: -.01em; color: #98a2b5; }
+.visit-bar[hidden] { display: none; }
+.visit-bar .visit-item { display: inline-flex; align-items: baseline; gap: 4px; }
+.visit-bar .visit-item b { font-weight: 800; color: var(--blue); font-variant-numeric: tabular-nums; }
+.visit-bar .visit-dot { color: #c9d2df; }
+@media (max-width: 420px) { .visit-bar { font-size: .68rem; } }
+
 .search-section { margin-bottom: 20px; }
 /* 안전 한마디 · 하단 고정 전광판 */
 .ticker-bar { position: fixed; z-index: 92; left: 50%; transform: translateX(-50%); bottom: 0; width: min(100%, 720px); display: flex; align-items: center; gap: 9px; height: calc(var(--ticker-height) + env(safe-area-inset-bottom)); padding: 0 12px env(safe-area-inset-bottom); background: linear-gradient(180deg, #101d38, #0a1327); border-top: 1px solid #24365d; box-shadow: 0 -6px 16px rgba(11,58,130,.10); }
@@ -1163,6 +1171,11 @@ window.SAFETY_CONFIG = {
   <a class="skip-link" href="#main-content">본문 바로가기</a>
 
   <div class="app-shell">
+    <div class="visit-bar" id="visitBar" aria-label="방문자 수" hidden>
+      <span class="visit-item">오늘 <b id="visitToday">–</b></span>
+      <span class="visit-dot" aria-hidden="true">·</span>
+      <span class="visit-item">누적 <b id="visitTotal">–</b></span>
+    </div>
     <header class="top-header" aria-label="서비스 상단">
       <a class="brand" href="#top" aria-label="안전ON 홈으로 이동">
         <span class="brand-title">안전<span class="power-o" aria-hidden="true">O</span>N</span>
@@ -1547,6 +1560,58 @@ window.SAFETY_CONFIG = {
     return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 })();
+  </script>
+
+  <!-- 방문자 수 카운터 -->
+  <script>
+  (() => {
+    "use strict";
+    const settings = window.SAFETY_ON_SUPABASE || {};
+    const configured = !!(settings.url && settings.publishableKey && !String(settings.publishableKey).includes("여기에"));
+    const bar = document.getElementById("visitBar");
+    const elToday = document.getElementById("visitToday");
+    const elTotal = document.getElementById("visitTotal");
+    if (!bar || !elToday || !elTotal) return;
+
+    const fmt = (n) => (n == null ? "–" : Number(n).toLocaleString("ko-KR"));
+    function show(total, today) {
+      elToday.textContent = fmt(today);
+      elTotal.textContent = fmt(total);
+      bar.removeAttribute("hidden");
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (!configured || !window.supabase?.createClient) return;
+      let sb;
+      try {
+        sb = window.supabase.createClient(settings.url, settings.publishableKey, { auth: { persistSession: false, autoRefreshToken: false } });
+      } catch (e) { return; }
+
+      // 같은 세션(브라우저 탭)에서는 새로고침해도 1회만 집계
+      let counted = false;
+      try { counted = sessionStorage.getItem("anjeon_visit_counted") === "1"; } catch (e) {}
+
+      try {
+        if (!counted) {
+          const { data, error } = await sb.rpc("increment_visit");
+          if (error) throw error;
+          const row = Array.isArray(data) ? data[0] : data;
+          if (row) show(row.total, row.today);
+          try { sessionStorage.setItem("anjeon_visit_counted", "1"); } catch (e) {}
+        } else {
+          // 이미 집계한 세션이면 숫자만 조회
+          const { data, error } = await sb.from("visit_counter").select("total_count,today_count,today_date").eq("id", 1).maybeSingle();
+          if (error) throw error;
+          if (data) {
+            const isToday = data.today_date === new Date().toISOString().slice(0, 10);
+            show(data.total_count, isToday ? data.today_count : 0);
+          }
+        }
+      } catch (e) {
+        console.warn("방문자 수 불러오기 실패", e);
+      }
+    });
+  })();
   </script>
 </body>
 </html>
