@@ -1,12 +1,12 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>안전ON 관리자</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><style>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>안전ON 관리자</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="supabase-config.js"></script><style>
 :root{font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;color:#172033;background:#f3f6fa;--blue:#1268e5;--navy:#0b3a82;--line:#dce3ec;--red:#e7473c;--green:#2e9b43;--yellow:#d9a900}*{box-sizing:border-box}body{margin:0;background:#f3f6fa}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(1120px,100%);margin:auto;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}.brand h1{margin:0;color:var(--blue);font-size:2rem;letter-spacing:-.06em}.brand p{margin:5px 0 0;color:#697386}.user{display:flex;align-items:center;gap:10px;font-size:.86rem}.btn{border:0;border-radius:12px;background:var(--blue);color:#fff;padding:12px 17px;font-weight:800}.btn.light{background:#eaf4ff;color:var(--navy)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 8px 24px rgba(11,58,130,.06)}.card.wide{grid-column:1/-1}.card h2{margin:0 0 5px;font-size:1.35rem}.sub{margin:0 0 18px;color:#697386;font-size:.9rem}.fields{display:grid;gap:14px}.two{grid-template-columns:1fr 1fr}.field{display:grid;gap:7px}.field label{font-weight:800;font-size:.9rem}.field input,.field textarea,.field select{width:100%;border:1.5px solid #cbd5e1;border-radius:12px;padding:12px 13px;background:#fff;outline:none}.field textarea{min-height:86px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(18,104,229,.1)}.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.level-btn{border:2px solid var(--line);background:#fff;border-radius:14px;padding:13px 8px;font-weight:900}.level-btn[data-level="정상"].active{border-color:var(--green);background:#edf8ee;color:#237d35}.level-btn[data-level="관심"].active{border-color:#f4c430;background:#fff8dc;color:#926d00}.level-btn[data-level="주의"].active{border-color:var(--red);background:#fff0ed;color:#b42318}.submit{width:100%;min-height:50px;border:0;border-radius:14px;background:var(--blue);color:#fff;font-weight:900;font-size:1.03rem}.form-actions{display:grid;grid-template-columns:1fr auto;gap:9px}.cancel-edit{border:0;border-radius:14px;background:#edf3fb;color:#173a67;padding:0 18px;font-weight:900}.notice-list{display:grid;gap:12px}.notice{border:1px solid var(--line);border-radius:16px;padding:16px}.notice.off{opacity:.7;background:#f7f8fa}.notice-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.notice-head strong{font-size:1.02rem}.state{margin-left:auto;font-size:.78rem;font-weight:800;color:#697386}.badge{padding:5px 9px;border-radius:999px;font-size:.74rem;font-weight:900}.badge.긴급{background:#ffe6e3;color:#b42318}.badge.일반{background:#eaf4ff;color:#1268e5}.badge.안내{background:#edf8ee;color:#237d35}.meta{color:#697386;font-size:.83rem}.order-chip{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:#f0f4f8;color:#43516a;font-size:.76rem;font-weight:800}.row-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.row-actions button{border:0;border-radius:10px;padding:9px 12px;font-weight:800;background:#edf3fb;color:#173a67}.row-actions .edit{background:#eaf4ff;color:#1268e5}.row-actions .danger{background:#fff0ed;color:#b42318}.login{width:min(440px,calc(100% - 28px));margin:12vh auto;background:#fff;border-radius:24px;padding:28px;border:1px solid var(--line);box-shadow:0 18px 55px rgba(11,58,130,.12)}.login h1{color:var(--blue);margin:0}.login .fields{margin:22px 0}.setup{margin:20px auto;width:min(700px,calc(100% - 30px));padding:18px;background:#fff4e5;border:1px solid #ffd39b;border-radius:16px}.notify{position:fixed;z-index:50;left:50%;bottom:24px;transform:translate(-50%,20px);background:#172033;color:#fff;padding:13px 18px;border-radius:13px;opacity:0;pointer-events:none;transition:.2s}.notify.show{opacity:1;transform:translate(-50%,0)}.notify.bad{background:#9f241a}.empty{text-align:center;color:#697386;padding:28px}.edit-banner{display:none;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#eaf4ff;color:#0b3a82;font-weight:800}.edit-banner.show{display:block}@media(max-width:760px){.wrap{padding:14px}.grid{grid-template-columns:1fr}.card.wide{grid-column:auto}.two{grid-template-columns:1fr}.top{align-items:flex-start}.brand h1{font-size:1.6rem}.user{flex-direction:column;align-items:flex-end}.card{padding:17px;border-radius:18px}.levels{position:sticky;top:0;z-index:3;background:#fff;padding:4px 0}.submit{min-height:54px}.form-actions{grid-template-columns:1fr}.cancel-edit{min-height:48px}.row-actions{justify-content:stretch}.row-actions button{flex:1 1 auto}.notice{padding:14px}}
-</style></head><body>
+.vr{border:1.5px solid var(--line);background:#fff;color:#43516a;border-radius:10px;padding:8px 12px;font-weight:800;font-size:.85rem}.vr.active{border-color:var(--blue);background:#eaf4ff;color:var(--navy)}</style></head><body>
 <div id="setupWarning" class="setup" hidden><strong>연결 설정이 필요합니다.</strong><br><code>supabase-config.js</code> 파일의 publishableKey에 Supabase 키 전체를 붙여넣으세요.</div>
 <section id="loginView" class="login" hidden><h1>안전ON 관리자</h1><p>휴대폰 전용 간편 관리</p><form id="loginForm" class="fields"><div class="field"><label for="email">관리자 이메일</label><input id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">비밀번호</label><input id="password" type="password" autocomplete="current-password" required></div><button class="submit">로그인</button></form><p class="sub">관리자 계정은 기존 Supabase 계정을 그대로 사용합니다.</p></section>
 <main id="appView" class="wrap" hidden><header class="top"><div class="brand"><h1>안전ON 관리자</h1><p>휴대폰 전용 간편 관리 · 휴대폰에서 신속하게 안전정보를 관리할 수 있습니다.</p></div><div class="user"><span id="userEmail"></span><button id="logout" class="btn light">로그아웃</button></div></header>
 <div class="grid"><section class="card"><h2>오늘의 안전 신호등</h2><p class="sub">단계와 안내내용을 작성한 뒤 게시하세요.</p><form id="statusForm" class="fields"><input id="level" type="hidden"><div class="levels"><button type="button" class="level-btn" data-level="정상">🟢 정상</button><button type="button" class="level-btn" data-level="관심">🟡 관심</button><button type="button" class="level-btn" data-level="주의">🔴 주의</button></div><div class="field"><label>표시 제목</label><input id="title" required></div><div class="field"><label>메인 안내문</label><textarea id="summary" required></textarea></div><div class="field"><label>선정 사유</label><textarea id="reason"></textarea></div><div class="field"><label>담당부서</label><input id="department"></div><div class="field"><label>행동수칙 1</label><input id="action1"></div><div class="field"><label>행동수칙 2</label><input id="action2"></div><div class="field"><label>행동수칙 3</label><input id="action3"></div><div class="field"><label>최근 갱신시각</label><input id="updatedAt" type="datetime-local" readonly></div><button class="submit">신호등 게시하기</button></form></section>
 <section class="card" id="noticeEditorCard"><h2 id="noticeFormTitle">안전이슈 새로 등록</h2><p class="sub">게시기간을 지정하면 해당 기간에만 QR 화면에 자동 표시됩니다.</p><div id="editBanner" class="edit-banner">등록된 안전이슈를 수정 중입니다.</div><form id="noticeForm" class="fields"><input id="editingId" type="hidden"><div class="fields two"><div class="field"><label>유형</label><select id="nType"><option>안내</option><option>일반</option><option>긴급</option></select></div><div class="field"><label>표시순서</label><select id="nOrder"><option value="1">1순위</option><option value="2">2순위</option><option value="3">3순위</option><option value="4">4순위</option><option value="5">5순위</option><option value="6">6순위</option><option value="7">7순위</option><option value="8">8순위</option><option value="9">9순위</option><option value="10">10순위</option></select></div></div><div class="field"><label>제목</label><input id="nTitle" required></div><div class="fields two"><div class="field"><label>게시 시작일</label><input id="nStart" type="date" required></div><div class="field"><label>게시 종료일</label><input id="nEnd" type="date" required></div></div><div class="field"><label>내용</label><textarea id="nContent"></textarea></div><div class="form-actions"><button id="noticeSubmit" class="submit">안전이슈 등록하기</button><button id="cancelEdit" type="button" class="cancel-edit" hidden>수정 취소</button></div></form></section>
-<section class="card wide"><h2>등록된 안전이슈 관리</h2><p class="sub">수정·게시 종료·다시 게시·삭제가 가능합니다. 게시기간 밖의 이슈는 자동으로 이용자 화면에서 숨겨집니다.</p><div id="noticeList" class="notice-list"></div></section><section class="card"><h2>안전 한마디 관리 <span id="msgCount" class="order-chip"></span></h2><p class="sub">직원들이 남긴 안전 한마디입니다. 부적절한 글은 숨기거나 삭제하세요.</p><div id="msgList" style="display:grid;gap:10px"><p class="empty">불러오는 중…</p></div></section></div></main><div id="notify" class="notify"></div><script>
+<section class="card wide"><h2>등록된 안전이슈 관리</h2><p class="sub">수정·게시 종료·다시 게시·삭제가 가능합니다. 게시기간 밖의 이슈는 자동으로 이용자 화면에서 숨겨집니다.</p><div id="noticeList" class="notice-list"></div></section><section class="card"><h2>안전 한마디 관리 <span id="msgCount" class="order-chip"></span></h2><p class="sub">직원들이 남긴 안전 한마디입니다. 부적절한 글은 숨기거나 삭제하세요.</p><div id="msgList" style="display:grid;gap:10px"><p class="empty">불러오는 중…</p></div></section><section class="card wide"><h2>방문자 통계 <span id="visitTotChip" class="order-chip"></span></h2><p class="sub">일별 방문 추이입니다. (한국시간 기준 · 60초마다 자동 새로고침)</p><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px"><div id="visitRangeBtns" style="display:flex;gap:6px"><button type="button" class="vr" data-range="7">최근 7일</button><button type="button" class="vr" data-range="30">최근 30일</button><button type="button" class="vr" data-range="all">전체</button></div><button type="button" id="visitExport" class="btn light" style="margin-left:auto">엑셀 다운로드</button></div><div id="visitStats"><p class="empty">불러오는 중…</p></div></section></div></main><div id="notify" class="notify"></div><script>
 const CFG=window.SAFETY_ON_SUPABASE||{};let sb,currentUser,channel;const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 function notify(msg,bad=false){const n=$('#notify');n.textContent=msg;n.className='notify show'+(bad?' bad':'');clearTimeout(window.__nt);window.__nt=setTimeout(()=>n.className='notify',3000)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -16,7 +16,7 @@ function addDays(dateStr,days){const d=new Date(dateStr+'T00:00:00+09:00');d.set
 function actionsFromForm(){return ['#action1','#action2','#action3'].map(s=>$(s).value.trim()).filter(Boolean)}
 async function boot(){if(!CFG.url||!CFG.publishableKey||CFG.publishableKey.includes('여기에')){$('#setupWarning').hidden=false;return}sb=window.supabase.createClient(CFG.url,CFG.publishableKey);const{data:{session}}=await sb.auth.getSession();if(session){currentUser=session.user;showApp()}else showLogin();sb.auth.onAuthStateChange((_e,s)=>{if(s){currentUser=s.user;showApp()}else showLogin()})}
 function showLogin(){$('#loginView').hidden=false;$('#appView').hidden=true}
-async function showApp(){$('#loginView').hidden=true;$('#appView').hidden=false;$('#userEmail').textContent=currentUser.email||'';await Promise.all([loadStatus(),loadNotices(),loadMessages()]);subscribe()}
+async function showApp(){$('#loginView').hidden=true;$('#appView').hidden=false;$('#userEmail').textContent=currentUser.email||'';await Promise.all([loadStatus(),loadNotices(),loadMessages(),loadVisitStats()]);subscribe();if(!window.__visitTimer)window.__visitTimer=setInterval(loadVisitStats,60000)}
 async function login(e){e.preventDefault();const email=$('#email').value.trim(),password=$('#password').value;const{error}=await sb.auth.signInWithPassword({email,password});if(error)notify('로그인 실패: '+error.message,true)}
 async function logout(){await sb.auth.signOut()}
 async function loadStatus(){const{data,error}=await sb.from('safety_status').select('*').eq('id',1).single();if(error){notify('신호등 불러오기 실패: '+error.message,true);return}$('#level').value=data.level;$('#title').value=data.title||'';$('#summary').value=data.summary||'';$('#reason').value=data.reason||'';$('#department').value=data.department||'';const a=Array.isArray(data.actions)?data.actions:[];$('#action1').value=a[0]||'';$('#action2').value=a[1]||'';$('#action3').value=a[2]||'';$('#updatedAt').value=kstInput(data.updated_at);updateLevelButtons()}
@@ -36,5 +36,77 @@ async function loadMessages(){const{data,error}=await sb.from('safety_messages')
 async function hideMessage(id,hide){const{error}=await sb.from('safety_messages').update({is_hidden:hide}).eq('id',id);if(error)return notify('변경 실패: '+error.message,true);notify(hide?'숨김 처리했습니다.':'다시 표시했습니다.');await loadMessages()}
 async function deleteMessage(id){if(!confirm('이 안전 한마디를 삭제할까요?'))return;const{error}=await sb.from('safety_messages').delete().eq('id',id);if(error)return notify('삭제 실패: '+error.message,true);notify('삭제했습니다.');await loadMessages()}
 function fmtMsgTime(v){if(!v)return'';const d=new Date(v);if(isNaN(d.getTime()))return String(v);return new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(d)}
-document.addEventListener('DOMContentLoaded',()=>{$('#loginForm').addEventListener('submit',login);$('#statusForm').addEventListener('submit',saveStatus);$('#noticeForm').addEventListener('submit',saveNotice);$('#cancelEdit').addEventListener('click',resetNoticeForm);$('#logout').addEventListener('click',logout);$$('.level-btn').forEach(b=>b.addEventListener('click',()=>chooseLevel(b.dataset.level)));resetNoticeForm();boot()});
+async function loadVisitStats(){
+  const box=document.querySelector('#visitStats'); if(!box||!sb) return;
+  const range=window.__visitRange||30;
+  const today=kstDate();
+  let q=sb.from('visit_daily').select('day,count').order('day',{ascending:true});
+  let start=null;
+  if(range!=='all'){ start=addDays(today,-(Number(range)-1)); q=q.gte('day',start).lte('day',today); }
+  const [dRes,cRes]=await Promise.all([
+    q,
+    sb.from('visit_counter').select('total_count,today_count,today_date').eq('id',1).maybeSingle()
+  ]);
+  if(dRes.error){ box.innerHTML='<p class="empty">방문 통계를 불러오지 못했습니다. ('+esc(dRes.error.message)+')</p>'; return; }
+  const rows=dRes.data||[];
+  const map={}; rows.forEach(r=>{ map[r.day]=Number(r.count)||0; });
+  let days=[];
+  if(range!=='all'){
+    const n=Number(range);
+    for(let i=0;i<n;i++){ const d=addDays(start,i); days.push({day:d,count:map[d]||0}); }
+  } else {
+    let d=rows.length?rows[0].day:today, guard=0;
+    while(d<=today && guard<2000){ days.push({day:d,count:map[d]||0}); d=addDays(d,1); guard++; }
+    if(!days.length) days.push({day:today,count:map[today]||0});
+  }
+  window.__visitDays=days;
+  const counter=cRes.data||{};
+  const total=Number(counter.total_count)||0;
+  const todayCount=(counter.today_date===today)?(Number(counter.today_count)||0):(map[today]||0);
+  const sum7=days.slice(-7).reduce((a,b)=>a+b.count,0);
+  const sumRange=days.reduce((a,b)=>a+b.count,0);
+  const max=Math.max(1,...days.map(d=>d.count));
+  const chip=document.querySelector('#visitTotChip'); if(chip) chip.textContent='누적 '+total.toLocaleString('ko-KR');
+  const rangeLabel=(range==='all')?'전체 합계':('최근 '+range+'일');
+  const bars=days.map(d=>{
+    const h=Math.max(2,Math.round((d.count/max)*100));
+    const on=d.day===today;
+    return '<div style="flex:1 0 16px;min-width:16px;display:flex;flex-direction:column;align-items:center;gap:5px" title="'+d.day+' · '+d.count.toLocaleString('ko-KR')+'명">'
+      +'<div style="width:100%;height:110px;display:flex;align-items:flex-end"><div style="width:78%;margin:auto;height:'+h+'%;background:'+(on?'var(--blue)':'#bcd4f5')+';border-radius:5px 5px 0 0"></div></div>'
+      +'<span style="font-size:.58rem;color:#8a94a6;white-space:nowrap;transform:rotate(-50deg);transform-origin:top center;height:26px;line-height:1">'+d.day.slice(5)+'</span>'
+      +'</div>';
+  }).join('');
+  const minW=Math.max(560,days.length*19);
+  box.innerHTML='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">'
+    +visitStatBox('오늘',todayCount)+visitStatBox('최근 7일',sum7)+visitStatBox(rangeLabel,sumRange)+visitStatBox('누적',total)
+    +'</div><div style="overflow-x:auto;padding-bottom:4px"><div style="display:flex;gap:3px;align-items:flex-end;min-width:'+minW+'px">'+bars+'</div></div>';
+  document.querySelectorAll('#visitRangeBtns .vr').forEach(b=>b.classList.toggle('active', String(b.dataset.range)===String(range)));
+}
+function visitStatBox(label,n){
+  return '<div style="flex:1 1 120px;min-width:108px;background:#f5f8fc;border:1px solid var(--line);border-radius:14px;padding:12px 14px">'
+    +'<div style="font-size:.78rem;color:#697386;font-weight:800">'+label+'</div>'
+    +'<div style="font-size:1.5rem;font-weight:900;color:var(--navy);font-variant-numeric:tabular-nums">'+Number(n).toLocaleString('ko-KR')+'</div></div>';
+}
+function exportVisitXlsx(){
+  const days=window.__visitDays||[];
+  if(!days.length){ notify('내보낼 데이터가 없습니다.',true); return; }
+  if(typeof XLSX==='undefined'){ notify('엑셀 모듈을 불러오지 못했습니다. 잠시 후 다시 시도하세요.',true); return; }
+  const aoa=[['날짜','방문수']];
+  days.forEach(d=>aoa.push([d.day, d.count]));
+  aoa.push([]);
+  aoa.push(['합계', days.reduce((a,b)=>a+b.count,0)]);
+  const ws=XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols']=[{wch:14},{wch:10}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'방문통계');
+  XLSX.writeFile(wb,'안전ON_방문통계_'+kstDate()+'.xlsx');
+  notify('엑셀 파일을 저장했습니다.');
+}
+function initVisitStats(){
+  window.__visitRange=window.__visitRange||30;
+  document.querySelectorAll('#visitRangeBtns .vr').forEach(b=>b.addEventListener('click',()=>{window.__visitRange=(b.dataset.range==='all')?'all':Number(b.dataset.range);loadVisitStats();}));
+  const ve=document.querySelector('#visitExport'); if(ve) ve.addEventListener('click',exportVisitXlsx);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{$('#loginForm').addEventListener('submit',login);$('#statusForm').addEventListener('submit',saveStatus);$('#noticeForm').addEventListener('submit',saveNotice);$('#cancelEdit').addEventListener('click',resetNoticeForm);$('#logout').addEventListener('click',logout);$$('.level-btn').forEach(b=>b.addEventListener('click',()=>chooseLevel(b.dataset.level)));resetNoticeForm();initVisitStats();boot()});
 </script></body></html>
