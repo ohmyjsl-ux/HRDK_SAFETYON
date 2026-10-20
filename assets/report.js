@@ -85,6 +85,7 @@ $('reportForm').addEventListener('submit',async e=>{
     const result=await request('safety-report-submit',{...payload,photo,analysisReceipt:receipt},60000);
     // Only a real successful server response may show a receipt.
     if(!result.receipt_number)throw Error('접수 결과를 확인하지 못했습니다. 입력한 내용을 유지한 채 다시 시도해 주세요.');
+    window.dispatchEvent(new Event('safety-report-submitted'));
     $('receiptNumber').textContent=result.receipt_number;$('reportForm').hidden=true;document.querySelector('.photo-card').hidden=true;$('successView').hidden=false;
     document.querySelectorAll('.steps li').forEach((el,i)=>el.classList.toggle('active',i===2));
     photo=null;receipt=null;findings=[];$('photoImage').removeAttribute('src');$('phone').value='';$('successView').focus();$('successView').scrollIntoView({behavior:'smooth'});
