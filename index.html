@@ -470,6 +470,7 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
   .employee-card-desc { display:none; }
 }
 
+.ai-report-badge{display:inline-flex;align-items:center;justify-content:center;margin-top:7px;padding:2px 7px;border-radius:999px;background:#eaf4ff;color:#1268e5;font-size:.65rem;font-weight:800;line-height:1.6}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
@@ -513,7 +514,7 @@ window.SAFETY_CONFIG = {
   ],
 
   links: {
-    report: "https://naver.me/GB35qfQu",
+    report: "report.html",
     buildingGuide: "#internal",
     emergency: "#internal",
     emergencyManual: "#internal",
@@ -581,7 +582,7 @@ window.SAFETY_CONFIG = {
 
   const quickMenus = [
     { key: "safetyNotice", title: "안전정보\n바로가기", description: "점검·공사·기상특보", keywords: "안전정보 공지 점검 공사 기상 기상특보 특보 날씨 폭염 한파 태풍 호우 재난문자 알림", icon: "documentInfo", accent: "#7c3aed", bg: "#f2ecff", border: "#ddccfb" },
-    { key: "report", title: "안전신문고\n바로가기", description: "위험요인 즉시 신고", keywords: "안전신문고 신문고 신고 제보 민원 위험 위험요인 불편 접수 안전신고", icon: "megaphone2", accent: "#d99a00", bg: "#fff7db", border: "#f4e3a3" },
+    { key: "report", title: "안전신문고\n바로가기", description: "사진 분석·신고 초안 작성", keywords: "안전신문고 신문고 신고 제보 민원 위험 위험요인 불편 접수 안전신고 사진 AI 인공지능 카메라", icon: "megaphone2", accent: "#d99a00", bg: "#fff7db", border: "#f4e3a3" },
     { key: "buildingGuide", title: "피난안내도\n바로가기", description: "비상구·대피경로 안내", keywords: "피난 피난안내도 대피 대피경로 비상구 탈출 출구 층별 안내도 대피로", icon: "exitDoor", accent: "#2f9e6b", bg: "#eafaf1", border: "#c8ebd6" },
     { key: "emergency", title: "비상연락망\n바로가기", description: "응급상황 대응 정보", keywords: "비상연락망 연락처 연락 전화 번호 소방서 119 담당자 관리자 엘리베이터 고장 승강기 구조", icon: "phone", accent: "#64748b", bg: "#f1f3f5", border: "#dde1e7" },
     { key: "emergencyManual", title: "비상상황 행동요령\n바로가기", description: "화재·지진·응급처치", keywords: "비상 행동요령 매뉴얼 화재 불 지진 응급 응급처치 심폐소생술 CPR AED 자동심장충격기 심정지 쓰러짐 대피 대응 소화기", icon: "siren", accent: "#dc2626", bg: "#ffeceb", border: "#f9cfcc" },
@@ -678,6 +679,7 @@ window.SAFETY_CONFIG = {
         <span class="quick-icon" aria-hidden="true">${iconSvg(item.icon)}</span>
         <span class="quick-title">${escapeHtml(item.title)}</span>
         <span class="quick-description">${escapeHtml(item.description)}</span>
+        ${item.key === "report" ? '<span class="ai-report-badge">AI 사진신고</span>' : ""}
         <span class="quick-chevron" aria-hidden="true">›</span>`;
       button.addEventListener("click", () => handleMenu(item.key));
       elements.quickMenuGrid.append(button);
@@ -760,7 +762,8 @@ window.SAFETY_CONFIG = {
 
   function handleMenu(key) {
     if (key === "report") {
-      playReportSound();
+      window.location.href = "report.html";
+      return;
     }
     const url = config.links?.[key] || "#";
     if (url && url !== "#" && url !== "#internal") {

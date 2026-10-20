@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="same-origin"><meta name="color-scheme" content="light">
+  <title>안전신문고 | 안전ON 경기서부지사</title>
+  <link rel="stylesheet" href="assets/report.css">
+  <script src="supabase-config.js"></script><script src="report-config.js"></script>
+  <script type="module" src="assets/report.js"></script>
+</head>
+<body>
+<a class="skip" href="#reportForm">신고서 바로가기</a>
+<div class="shell">
+  <header class="top"><a href="index.html" class="brand" aria-label="안전ON 홈">안전<span>ON</span><small>경기서부지사</small></a><a href="index.html" class="back">← 홈으로</a></header>
+  <main>
+    <section class="hero"><div><p class="eyebrow">경기서부지사 안전양지 만들기!</p><h1>작은 발견이<br>모두의 안전으로</h1><p>청사 이용 중 발견한 위험요소와<br>안전을 위한 개선 의견을 알려주세요.</p><span class="hero-label">안전신문고 · 사진으로 더 간편하게</span></div><img src="images/안전캐릭터.png" alt="경기서부지사 안전 캐릭터" width="150" height="155"></section>
+    <p class="emergency">화재·구조·구급 등 긴급상황은 <a href="tel:119">119</a>에 먼저 신고해 주세요.</p>
+    <div id="previewNotice" class="preview-note" hidden>화면 미리보기입니다. 사진 선택과 신고서 작성은 체험할 수 있으며, 실제 AI 분석과 접수는 연결 설정 후 이용할 수 있습니다.</div>
+    <ol class="steps" aria-label="신고 절차"><li class="active"><b>1</b>사진 확인<span>선택</span></li><li><b>2</b>신고 작성</li><li><b>3</b>접수 완료</li></ol>
+
+    <section class="card photo-card" aria-labelledby="photoHeading">
+      <div class="section-head"><div><p class="eyebrow blue">AI 신고 도우미</p><h2 id="photoHeading">사진으로 위험요소 찾기</h2></div><span class="optional">선택사항</span></div>
+      <p class="help">사진을 분석해 신고내용 초안을 만들어드려요.<br>사진 없이 아래 신고서를 직접 작성해도 됩니다.</p>
+      <div class="photo-empty" id="photoEmpty"><svg aria-hidden="true" viewBox="0 0 48 48"><path d="M8 14h9l3-5h8l3 5h9v25H8z"/><circle cx="24" cy="26" r="8"/></svg><strong>발견한 현장을 사진으로 남겨주세요</strong><span>얼굴·이름·문서 등 개인정보가 보이지 않게 촬영해 주세요.</span></div>
+      <figure id="photoPreview" class="photo-preview" hidden><img id="photoImage" alt="신고에 첨부할 현장 사진"><figcaption><span id="photoInfo"></span><button type="button" id="removePhoto" class="text-button">사진 삭제</button></figcaption></figure>
+      <div class="photo-actions"><button type="button" id="cameraButton" class="button secondary">📷 사진 촬영</button><button type="button" id="fileButton" class="button secondary">사진 선택</button></div>
+      <input type="file" id="cameraInput" accept="image/jpeg,image/png,image/webp" capture="environment" hidden>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+      <div id="analysisOptions" hidden>
+        <p class="help">사진과 아래 내용을 확인하면 AI 분석이 자동으로 시작됩니다.</p>
+        <label class="check-line"><input type="checkbox" id="photoPrivacyChecked"><span>사진과 장소 설명에 얼굴·명찰·연락처·민원서류 등 개인정보나 기밀정보가 없는지 확인했습니다.</span></label>
+        <p class="tiny">사진과 입력한 장소 설명이 Google Gemini로 전송됩니다. 무료 서비스에서는 전송한 내용과 분석 결과가 Google 제품·AI 개선에 사용되고 사람이 검토할 수 있습니다. 개인정보를 자동으로 가려주는 기능은 없습니다.</p>
+        <label class="check-line"><input type="checkbox" id="aiConsent"><span>위 내용을 확인하고 사진·장소 설명을 Google Gemini로 전송하여 분석하는 데 동의합니다.</span></label>
+        <p class="tiny">구분·신고일자·신고내용·휴대전화번호는 AI에 보내지 않습니다. 동의하지 않아도 신고서를 직접 작성할 수 있습니다.</p>
+        <button type="button" id="analyzeButton" class="button primary full">✦ AI로 신고 초안 작성</button>
+      </div>
+      <p id="analysisMessage" class="status-message" role="status" aria-live="polite" hidden></p>
+      <div id="analysisResults" class="analysis-results" hidden><div class="result-heading"><h3>AI가 찾은 위험 의심사항</h3><span id="findingCount"></span></div><p class="help">실제 상황에 맞는 항목만 선택해 주세요. AI 결과는 틀리거나 위험을 놓칠 수 있습니다.</p><div id="findingList"></div><button type="button" id="applyDraft" class="button secondary full">선택한 항목으로 초안 넣기</button></div>
+    </section>
+
+    <form id="reportForm" novalidate>
+      <div class="form-heading"><h2>안전신문고 작성</h2><span><i>*</i> 필수항목</span></div>
+      <fieldset class="card"><legend><span>1</span> 구분 <i>*</i></legend><div class="radio-grid"><label class="radio-choice"><input type="radio" name="reporterType" value="고객" required><span>고객</span></label><label class="radio-choice"><input type="radio" name="reporterType" value="직원"><span>직원</span></label><label class="radio-choice"><input type="radio" name="reporterType" value="수급업체 근로자"><span>수급업체 근로자</span></label></div></fieldset>
+      <section class="card"><label class="field-title" for="reportDate"><span>2</span> 신고(건의)일자 <i>*</i></label><p class="help">위험요소 또는 제도개선사항을 확인한 날짜</p><input id="reportDate" name="reportDate" type="date" required></section>
+      <section class="card"><label class="field-title" for="location"><span>3</span> 위험장소/제도개선 분야 <i>*</i></label><p class="help">구체적인 장소·위치 또는 교육, 캠페인, 출장, 자격시험 등 관련 분야</p><input id="location" name="location" maxlength="100" placeholder="예: 3층 계단 입구 / 자격시험 안전안내" required><div class="counter"><span id="locationCount">0</span>/100자</div></section>
+      <section class="card"><label class="field-title" for="content"><span>4</span> 신고(건의)내용 <i>*</i></label><p class="help">어떤 위험이 있고, 어떻게 개선하면 좋을지 알려주세요.</p><p id="draftLabel" class="draft-label" hidden>✦ AI가 작성한 초안입니다. 실제 상황에 맞게 수정해 주세요.</p><textarea id="content" name="content" rows="7" maxlength="2000" placeholder="위험요소나 개선 의견을 자유롭게 작성해 주세요." required></textarea><div class="counter"><span id="contentCount">0</span>/2,000자</div></section>
+      <section class="card"><label class="field-title" for="phone"><span>5</span> 휴대전화 <span class="optional">선택</span></label><p class="help">조치 결과 안내를 원하는 경우에만 입력해 주세요.</p><input id="phone" name="phone" type="tel" inputmode="numeric" maxlength="11" autocomplete="tel" placeholder="개인정보 이용 동의 후 입력할 수 있어요" disabled><p class="tiny">아래 동의 항목에서 ‘동의합니다’를 선택하면 입력할 수 있습니다.</p></section>
+      <fieldset class="card"><legend><span>6</span> 개인정보 수집 및 이용 동의 <i>*</i></legend><p class="help">안전신문고 추진 경과 안내를 위해 아래 내용을 확인하고 동의 여부를 선택해 주세요. 동의하지 않아도 연락처 없이 신고할 수 있습니다.</p><dl class="privacy"><div><dt>수집 항목</dt><dd>휴대전화번호</dd></div><div><dt>이용 목적</dt><dd>안전신문고 추진 경과 안내</dd></div><div><dt>보유·이용기간</dt><dd>위험요소 조치 또는 내용 종결 후 즉시 파기</dd></div></dl><div class="consent-options"><label class="radio-choice"><input type="radio" name="privacyConsent" value="yes" required><span>동의합니다</span></label><label class="radio-choice"><input type="radio" name="privacyConsent" value="no"><span>동의하지 않습니다</span></label></div></fieldset>
+      <div class="card final-check"><label class="check-line"><input type="checkbox" id="reviewed" required><span>사진과 신고내용이 실제 상황에 맞는지 확인했습니다.</span></label><div class="trap" aria-hidden="true"><label>이 항목은 비워두세요<input id="website" tabindex="-1" autocomplete="off"></label></div><p id="submitError" class="error-message" role="alert" hidden></p><button class="button primary full" id="submitButton" type="submit">안전신문고 접수하기 →</button><p class="tiny center">신고내용은 담당 관리자만 확인할 수 있습니다.</p></div>
+    </form>
+    <section class="card success" id="successView" tabindex="-1" hidden><span class="success-icon">✓</span><h2>안전신문고가 접수되었습니다</h2><p>안전한 일상을 위한 소중한 의견에 감사드립니다.</p><div class="receipt"><span>접수번호</span><strong id="receiptNumber"></strong></div><p class="help">접수번호를 기록해 주세요. 연락처를 남긴 경우 담당자가 추진 경과를 안내할 수 있습니다.</p><div class="photo-actions"><a class="button secondary" href="index.html">안전ON 홈</a><button class="button primary" type="button" id="newReport">새 신고 작성</button></div></section>
+    <footer><img src="images/지사로고.png" alt="한국산업인력공단 경기서부지사"><p>청사 안전관리에 협조해 주셔서 감사합니다!</p></footer>
+  </main>
+</div>
+<dialog id="replaceDialog"><h2>작성한 내용을 바꿀까요?</h2><p>현재 신고내용을 AI 초안으로 바꿉니다. 유지하려면 취소를 눌러주세요.</p><div class="photo-actions"><button class="button secondary" id="cancelReplace" type="button">취소</button><button class="button primary" id="confirmReplace" type="button">초안으로 바꾸기</button></div></dialog>
+</body></html>
