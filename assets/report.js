@@ -59,7 +59,7 @@ async function analyzePhoto(){
     message(result.note||'실제 상황에 맞는 항목을 확인해 주세요.');
     if(!$('content').value.trim())applyDraft(draftFromFindings(findings));
   }catch(e){if(version===photoVersion)message(e.message,true);}
-  finally{analysisBusy=false;$('analyzeButton').disabled=false;$('analyzeButton').textContent='✦ AI로 신고 초안 작성';['cameraButton','fileButton','removePhoto','photoPrivacyChecked','aiConsent'].forEach(id=>$(id).disabled=false);}
+  finally{analysisBusy=false;$('analyzeButton').disabled=false;$('analyzeButton').textContent='AI로 신고 초안 작성';['cameraButton','fileButton','removePhoto','photoPrivacyChecked','aiConsent'].forEach(id=>$(id).disabled=false);}
 }
 $('analyzeButton').onclick=analyzePhoto;
 ['photoPrivacyChecked','aiConsent'].forEach(id=>$(id).addEventListener('change',()=>{

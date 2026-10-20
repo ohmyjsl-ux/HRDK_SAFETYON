@@ -17,8 +17,8 @@ async function loadStats(){
     if(!c||!['received','processing','completed','total'].every(k=>Number.isSafeInteger(Number(c[k]))&&Number(c[k])>=0)||Number(c.total)!==Number(c.received)+Number(c.processing)+Number(c.completed))throw Error('집계 정보를 확인하지 못했습니다.');
     for(const [id,k] of [['statTotal','total'],['statReceived','received'],['statProcessing','processing'],['statCompleted','completed']])$(id).textContent=Number(c[k]).toLocaleString('ko-KR');
     const time=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(d.as_of));
-    $('statsMessage').textContent=`${time} 기준 · 60초마다 갱신`;
-  }catch{$('statsMessage').textContent=preview?'실제 접수 현황은 연결 후 표시됩니다.':'처리 현황을 갱신하지 못했습니다. 잠시 후 다시 확인해 주세요.';}
+    $('statsMessage').textContent=`${time} 기준`;
+  }catch{$('statsMessage').textContent=preview?'연결 후 현황 표시':'현황을 갱신하지 못했습니다.';}
   finally{statsBusy=false;}
 }
 function selectTab(results){
