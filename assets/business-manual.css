@@ -284,3 +284,6 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 /* 작은 화면의 스크롤바 폭까지 감안하여 가로 잘림을 방지합니다. */
 @media(max-width:340px){body{min-width:0}}
+
+/* 한글 서식 다운로드 링크 */
+a.step-tool{display:inline-flex;align-items:center;line-height:1.5;text-decoration:none;overflow-wrap:anywhere}

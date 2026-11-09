@@ -1,8 +1,7 @@
 export const FORMS=Object.freeze({
-  report:{id:'report',title:'안전사고 보고서',tag:'별첨1',pages:1,file:'forms/work-study-accident-report.pdf',download:'일학습병행_안전사고_보고서.pdf',summary:'사고자 인적사항, 기업 현황, 사고 경위, 기업·학교 조치사항, 사후 관리 계획'},
-  recurrence:{id:'recurrence',title:'산업재해재발방지계획서',tag:'별첨2',pages:2,file:'forms/work-study-recurrence-plan.pdf',download:'일학습병행_산업재해재발방지계획서.pdf',summary:'사업장·재해자 개요, 6하 원칙에 따른 발생 과정, 원인 분석, 교육적·기술적·관리적 재발방지계획'},
-  investigation:{id:'investigation',title:'산업재해조사표',tag:'참고자료 · 제공 원문',pages:2,file:'forms/work-study-investigation-reference.pdf',download:'산업재해조사표_제공원문_참고용.pdf',summary:'제공 PDF의 참고 서식과 작성방법입니다. 원문은 2021. 11. 19. 개정 표기이며, 실제 법정 제출에는 최신 서식을 확인하세요.'},
-  original:{id:'original',title:'일학습병행 안전사고 관련 서식 전체',tag:'업로드 원본',pages:3,file:'forms/work-study-forms-original.pdf',download:'일학습병행_안전사고_관련서식_원본.pdf',summary:'제공된 3쪽 PDF를 그대로 보관한 원본입니다.'}
+  report:{id:'report',title:'안전사고 보고서',tag:'별첨1',file:'forms/work-study-accident-report.hwp',download:'안전사고_보고서.hwp',summary:'사고자 인적사항, 기업 현황, 사고 경위, 기업·학교 조치사항, 사후 관리 계획'},
+  recurrence:{id:'recurrence',title:'산업재해재발방지계획서',tag:'별첨2',file:'forms/work-study-recurrence-plan.hwp',download:'산업재해재발방지계획서.hwp',summary:'사업장·재해자 개요, 6하 원칙에 따른 발생 과정, 원인 분석, 교육적·기술적·관리적 재발방지계획'},
+  investigation:{id:'investigation',title:'산업재해조사표',tag:'참고자료 · 제공 원문',file:'forms/work-study-investigation-reference.hwp',download:'산업재해조사표.hwp',summary:'제공된 한글 서식입니다. 원문은 2021. 11. 19. 개정 표기이며, 실제 법정 제출에는 최신 서식을 확인하세요.'}
 });
 export const SOURCES=Object.freeze({
   plan:'경기서부지사 기업인재혁신부 「일학습병행 학습근로자 안전사고 보고체계 개선 계획(안)」(2026. 10. 29.)',
@@ -18,11 +17,11 @@ export const MANUALS=Object.freeze({
   deadlines:[{when:'사고 즉시',what:'공동훈련센터 유선보고'},{when:'10일 이내',what:'재발방지계획서 센터 보고'}],
   immediate:[
    {title:'현장 안전 확보·응급조치',bullets:['학습근로자의 안전을 우선 확보하고, 긴급한 구조·구급이 필요하면 119에 신고합니다.','위험작업을 중지하고 추가 사고가 발생하지 않도록 현장 접근을 통제합니다.','응급조치는 119 상담원 등 전문인력의 안내에 따라 시행합니다.'],contacts:['emergency']},
-   {title:'공동훈련센터에 즉시 유선보고',deadline:'사고 즉시',bullets:['응급조치 후 공동훈련센터 안전관리 담당자에게 즉시 전화로 보고합니다. 서류 작성을 기다리지 않습니다.','기업명, 사고 발생 일시·장소, 재해자 상태, 응급조치 내용, 현장 연락처를 전달합니다.','보호자·학교 등 관계자 상황 공유는 공동훈련센터와 연락하여 역할을 확인합니다.'],contacts:['center']},
-   {title:'사고 내용·기업 조치사항 기록',bullets:['사고 발생 경위, 부상 부위·정도, 응급조치 및 사고 상황 공유 내역을 시간 순서로 기록합니다.','안전사고 보고서(별첨1)의 기업 관련 내용을 작성·전달하여 센터의 3일 이내 지사 보고에 협조합니다.','추가로 확인되거나 변경된 사항은 공동훈련센터에 신속하게 공유합니다.'],forms:['report'],contacts:['center']}
+   {title:'공동훈련센터에 즉시 유선보고',deadline:'사고 즉시',bullets:['응급조치 후 공동훈련센터 안전관리 담당자에게 즉시 전화로 보고합니다. 서류 작성을 기다리지 않습니다.','기업명, 사고 발생 일시·장소, 재해자 상태, 응급조치 내용, 현장 연락처를 전달합니다.','보호자·학교 등 관계자 상황 공유는 공동훈련센터와 연락하여 역할을 확인합니다.']},
+   {title:'사고 내용·기업 조치사항 기록',bullets:['사고 발생 경위, 부상 부위·정도, 응급조치 및 사고 상황 공유 내역을 시간 순서로 기록합니다.','안전사고 보고서(별첨1)의 기업 관련 내용을 작성·전달하여 센터의 3일 이내 지사 보고에 협조합니다.','추가로 확인되거나 변경된 사항은 공동훈련센터에 신속하게 공유합니다.'],forms:['report']}
   ],
   after:[
-   {title:'재발방지계획서 작성·센터 보고',deadline:'사고 발생일부터 10일 이내',bullets:['사고 발생일부터 10일 이내에 산업재해재발방지계획서(별첨2)를 작성하여 공동훈련센터에 보고합니다.','사업장·재해자 개요와 6하 원칙에 따른 재해발생 과정, 인적·물적·관리적 원인을 기재합니다.','교육적·기술적·관리적 재발방지계획을 구체적으로 작성합니다. 센터의 지사 보고도 10일 이내이므로 전달 일정을 미리 조율합니다.'],forms:['recurrence'],contacts:['center']},
+   {title:'재발방지계획서 작성·센터 보고',deadline:'사고 발생일부터 10일 이내',bullets:['사고 발생일부터 10일 이내에 산업재해재발방지계획서(별첨2)를 작성하여 공동훈련센터에 보고합니다.','사업장·재해자 개요와 6하 원칙에 따른 재해발생 과정, 인적·물적·관리적 원인을 기재합니다.','교육적·기술적·관리적 재발방지계획을 구체적으로 작성합니다. 센터의 지사 보고도 10일 이내이므로 전달 일정을 미리 조율합니다.'],forms:['recurrence']},
    {title:'서류 보완·후속조치 공유',bullets:['공동훈련센터의 확인·보완 요청에 따라 사고 기록과 재발방지계획을 보완합니다.','기업 조치사항, 추가 확인사항, 재발방지대책 실행 현황을 공동훈련센터에 공유합니다.','법정 산업재해 보고·산재보험 처리 등은 해당 기관의 기준에 따라 별도로 확인합니다.'],forms:['report','recurrence']},
    {title:'재발방지·안전보건교육 이행',bullets:['수립한 재발방지대책을 실행하고 필요한 안전보건교육을 추가 실시합니다.','학습근로자 보호와 사고 사후 관리 계획의 이행 내역을 기록합니다.','공동훈련센터·지사의 현장 확인과 사후관리 요청에 협조하고 업무 연락처를 현행화합니다.']}
   ],
