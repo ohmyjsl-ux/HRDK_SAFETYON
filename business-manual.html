@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b3a82"><meta name="robots" content="noindex,nofollow">
+  <title>일학습병행 안전사고 대응 | 사업별 비상대응 매뉴얼 | 안전ON</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="assets/business-manual.css?v=20261109-1">
+  <script src="business-manual-config.js?v=20261109-1"></script>
+  <script type="module" src="assets/business-manual.mjs?v=20261109-1"></script>
+</head>
+<body>
+  <a class="skip-business" href="#manual">대응 매뉴얼 본문 바로가기</a>
+  <main class="shell" id="pageShell">
+    <div class="topbar"><a class="back" href="index.html#businessManualHeading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>안전ON</a><span class="staff-badge">사업 관계자용</span></div>
+    <nav class="role-select" aria-label="담당자별 대응 매뉴얼"><p class="role-prompt">담당하신 역할을 선택하세요.</p><div class="phase-tabs role-tabs" role="tablist" aria-label="담당자 구분">
+      <button id="roleCompany" type="button" role="tab" aria-controls="manual" aria-selected="true" class="is-active" data-role="company">학습기업 담당자용</button>
+      <button id="roleCenter" type="button" role="tab" aria-controls="manual" aria-selected="false" tabindex="-1" data-role="center">공동훈련센터 담당자용</button>
+    </div></nav>
+    <section id="manual" class="manual" role="tabpanel" aria-labelledby="roleCompany">
+      <header class="manual-head"><p class="manual-kicker">BUSINESS EMERGENCY MANUAL</p><h1>일학습병행<br>안전사고 발생 시</h1><p class="role-subtitle" id="manualRoleLabel">학습기업 담당자용</p><p id="manualSubtitle">학습근로자 안전사고 발생 시 현장에서 확인하는 단계별 대응 절차</p><div class="head-actions"><button id="startFlow" class="start-btn" type="button">🚨 예, 지금 사고가 났습니다</button></div></header>
+      <div class="urgent"><strong>인명 보호와 긴급조치가 먼저입니다.</strong><p>위험작업을 중지하고 추가 사고를 방지하세요. 긴급한 구조·구급이 필요하면 119에 신고하고 전문인력의 안내에 따라 대응합니다.</p></div>
+      <div id="deadlineSummary" class="deadline-summary" aria-label="담당자별 핵심 보고기한"></div>
+      <section class="section" id="contactsSection" aria-labelledby="contactsHeading"><div class="section-title"><h2 id="contactsHeading">즉시 연락</h2><span>누르면 전화 연결</span></div><div id="contactGrid" class="contact-groups"></div><p id="contactsNotice" class="source-note"></p></section>
+      <section class="section" aria-labelledby="stepsHeading"><div class="section-title"><h2 id="stepsHeading">단계별 대응 절차</h2><span>현장용 요약</span></div>
+        <div class="phase-tabs" role="tablist" aria-label="사고 대응 시점"><button id="tabImmediate" class="is-active" type="button" role="tab" aria-selected="true" aria-controls="steps" data-phase="immediate">사고 직후</button><button id="tabAfter" type="button" role="tab" aria-selected="false" aria-controls="steps" tabindex="-1" data-phase="after">사고 이후</button></div><div id="steps" class="steps" role="tabpanel" aria-labelledby="tabImmediate"></div>
+      </section>
+      <section class="section" aria-labelledby="formsHeading" id="formsSection"><div class="section-title"><h2 id="formsHeading">활용 서식</h2><span>보기·다운로드</span></div><div id="formGrid" class="special-grid"></div><p class="source-note">분리 서식은 제공 원문의 내용과 표를 유지하여 A4로 정리했습니다. 아래 ‘원본 서식 PDF 보기’에서는 업로드 원문 전체를 확인할 수 있습니다.</p></section>
+      <section class="section" aria-labelledby="additionalHeading"><div class="section-title"><h2 id="additionalHeading">작성·보고 시 확인사항</h2><span>누락 방지</span></div><div id="specialGrid" class="special-grid"></div></section>
+      <div class="bottom-actions"><button id="pdfBtn" class="outline-btn" type="button">📄 원본 서식 PDF 보기</button><button id="allStepsBtn" class="outline-btn" type="button">☑ 전체 절차흐름도 보기</button></div>
+      <p class="source-note source-footer">기준 자료: 경기서부지사 기업인재혁신부 「일학습병행 학습근로자 안전사고 보고체계 개선 계획(안)」(2026. 10. 29.) 및 제공 서식<br>이 화면의 3일·10일은 지사 업무보고 기준입니다. 법정 산업재해 보고·산재보험 절차는 해당 기관의 기준에 따라 별도로 확인하세요.</p>
+      <noscript><div class="error-card">역할별 단계 안내에는 자바스크립트가 필요합니다. 긴급 구조·구급은 <a href="tel:119">119</a>로 신고하세요. <a href="forms/work-study-forms-original.pdf">제공 원본 서식 PDF</a>는 바로 열 수 있습니다.</div></noscript>
+    </section>
+  </main>
+  <div id="flowBackdrop" class="flow-backdrop" hidden><section class="flow" role="dialog" aria-modal="true" aria-labelledby="flowTitle" tabindex="-1"><div class="flow-head"><div><p id="flowRoleLabel">현장 대응 모드</p><h2 id="flowTitle">일학습병행 안전사고 대응</h2></div><button id="flowClose" class="close" type="button" aria-label="현장 대응 모드 닫기">×</button></div><div class="flow-body"><div class="progress" role="progressbar" aria-label="전체 대응 절차 진행" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1" id="flowProgress"><span id="progressBar"></span></div><div id="flowStepLabel" class="flow-step-label"></div><h3 id="flowStepTitle"></h3><ul id="flowStepBullets"></ul><div id="flowStepContact" class="flow-step-contact"></div></div><div class="flow-foot"><button id="prevBtn" class="prev" type="button">이전</button><button id="nextBtn" class="next" type="button">완료 · 다음 단계</button></div></section></div>
+  <div id="overviewBackdrop" class="flow-backdrop" hidden><section class="flow overview" role="dialog" aria-modal="true" aria-labelledby="overviewTitle" tabindex="-1"><div class="flow-head"><div><p>일학습병행 안전사고 보고체계</p><h2 id="overviewTitle">전체 절차흐름도</h2></div><button id="overviewClose" class="close" type="button" aria-label="전체 절차흐름도 닫기">×</button></div><div class="overview-body">
+    <p class="overview-role" id="overviewRole"></p>
+    <div class="flow-origin"><strong>안전사고 발생</strong><span>현장 안전 확보 · 필요한 경우 119 신고 및 응급조치</span></div>
+    <p class="diagram-arrow" aria-hidden="true">↓</p>
+    <ol class="report-diagram" aria-label="학습기업에서 공동훈련센터를 거쳐 공단 지부지사로 보고하는 흐름">
+      <li class="report-node" data-owner="company"><span class="node-number">01</span><h3>학습기업</h3><p>안전관리 책임자</p><div class="node-deadline"><strong>사고 즉시</strong><span>응급조치 후 센터 유선보고</span></div><div class="node-deadline"><strong>10일 이내</strong><span>별첨2 작성·센터 보고</span></div></li>
+      <li class="report-node" data-owner="center"><span class="node-number">02</span><h3>공동훈련센터</h3><p>안전관리 담당자</p><div class="node-deadline"><strong>3일 이내</strong><span>별첨1 지사 보고</span></div><div class="node-deadline"><strong>10일 이내</strong><span>학습기업의 별첨2 지사 보고</span></div><div class="guardian-branch"><span aria-hidden="true">↓</span><strong>사고자 보호자</strong><span>사고 상황 공유</span></div></li>
+      <li class="report-node" data-owner="branch"><span class="node-number">03</span><h3>한국산업인력공단</h3><p>관할 지부·지사 담당자</p><div class="node-result">사고 보고 접수<br>재발방지계획 확인<br>사후관리·현장 모니터링</div></li>
+    </ol>
+    <p class="diagram-caption">사고 발생일 기준 · 정·부 담당자 업무 공유로 보고 누락 방지</p>
+    <div class="deadline-table-wrap"><table class="deadline-table"><caption>기한별 담당 업무 한눈에 보기</caption><thead><tr><th scope="col">시점</th><th scope="col">학습기업</th><th scope="col">공동훈련센터</th></tr></thead><tbody><tr><th scope="row">즉시</th><td>응급조치 후 센터에 유선보고</td><td>사고·현장조치 확인, 보호자 상황 공유</td></tr><tr><th scope="row">3일 이내</th><td>별첨1 작성에 필요한 기업 내용 전달·협조</td><td>별첨1 안전사고 보고서 → 지부·지사</td></tr><tr><th scope="row">10일 이내</th><td>별첨2 재발방지계획서 → 센터</td><td>학습기업의 별첨2 → 지부·지사</td></tr><tr><th scope="row">사고 이후</th><td>재발방지·추가 안전보건교육 이행</td><td>개선 이행 확인·보고사항 보완·사후관리</td></tr></tbody></table></div>
+    <p class="source-note">기업의 센터 보고와 센터의 지사 보고가 모두 10일 이내입니다. 전달·검토 일정을 미리 조율하세요. 이 기한은 제공된 지사 개선계획의 업무보고 기준입니다.</p>
+  </div></section></div>
+  <div id="pdfBackdrop" class="pdf-backdrop" hidden><section class="pdf-viewer" role="dialog" aria-modal="true" aria-labelledby="pdfViewerTitle" tabindex="-1"><div class="pdf-viewer-head"><div class="pdf-viewer-title"><strong id="pdfViewerTitle">안전사고 관련 서식</strong><span id="pdfPageInfo">PDF 서식</span></div><div class="pdf-viewer-actions"><div class="pdf-toolbar" aria-label="PDF 확대 축소"><button id="pdfZoomOut" class="pdf-tool-btn" type="button" aria-label="서식 축소">−</button><span id="pdfZoomLabel" class="pdf-zoom-label">100%</span><button id="pdfZoomIn" class="pdf-tool-btn" type="button" aria-label="서식 확대">＋</button></div><a class="pdf-external" id="pdfExternal" href="forms/work-study-forms-original.pdf" target="_blank" rel="noopener noreferrer">새 창에서 보기</a><a class="pdf-download" id="pdfDownload" href="forms/work-study-forms-original.pdf" download>저장</a><button id="pdfClose" class="pdf-close" type="button" aria-label="PDF 닫기">×</button></div></div><div id="pdfPages" class="pdf-pages" aria-label="안전사고 관련 빈 서식 PDF"><div class="pdf-loading">서식을 불러오는 중입니다.</div></div></section></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>
