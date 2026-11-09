@@ -474,6 +474,8 @@ svg.ic * { stroke-linecap: round; stroke-linejoin: round; }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
+  <script src="survey-config.js"></script>
+  <link rel="stylesheet" href="assets/survey.css?v=20261109-1">
   <script>
 window.SAFETY_CONFIG = {
   branchName: "경기서부지사",
@@ -1186,6 +1188,7 @@ window.SAFETY_CONFIG = {
         </a>
 
       <div class="header-actions" aria-label="빠른 기능">
+        <a class="so-survey-launch" id="safetySurveyLaunch" href="survey.html" hidden>만족도 조사</a>
         <button class="icon-button" id="searchFocusButton" type="button" aria-label="메뉴 검색">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
         </button>
@@ -1616,5 +1619,6 @@ window.SAFETY_CONFIG = {
     });
   })();
   </script>
+  <script type="module" src="assets/survey-popup.mjs?v=20261109-1"></script>
 </body>
 </html>
